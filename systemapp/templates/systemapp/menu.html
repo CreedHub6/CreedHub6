@@ -1,0 +1,26 @@
+{% extends 'systemapp/base.html' %}
+{% block content %}
+<div class="container">
+    <h1 class="text-primary">Menu - {{ restaurant.name }}</h1>
+    <form method="post" action="{% url 'place_order' %}">
+        {% csrf_token %}
+        <ul class="list-group">
+            {% for item in menu_items %}
+                <li class="list-group-item d-flex align-items-center">
+                    <!-- Display the image -->
+                    {% if item.image %}
+                        <img src="{{ item.image.url }}" alt="{{ item.name }}" class="img-thumbnail me-3" style="width: 100px; height: 100px;">
+                    {% endif %}
+                    <!-- Item details -->
+                    <div>
+                        <input type="checkbox" name="items" value="{{ item.id }}">
+                        <strong>{{ item.name }}</strong> - ${{ item.price }}
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+        <textarea name="delivery_address" class="form-control mt-3" placeholder="Enter delivery address"></textarea>
+        <button type="submit" class="btn btn-success mt-3">Place Order</button>
+    </form>
+</div>
+{% endblock %}
