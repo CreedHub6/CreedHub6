@@ -1,18 +1,175 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Online Food Ordering System</title>
+
     <!-- Bootstrap CSS from CDN -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+
+    <!-- Animate.css (for animations) -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+	    padding-top: 56px;
+            padding-bottom: 56px; /* To avoid overlap with the bottom menu */
+        }
+
+        .navbar {
+            background-color: rgba(0, 0, 0, 0.7);
+	    position: fixed;
+	    top: 0;
+	    width: 100%;
+	    z-index: 1030;
+        }
+
+        .navbar-brand {
+            font-weight: 600;
+            font-size: 1.5rem;
+        }
+
+        .navbar-nav .nav-link {
+            font-size: 1.1rem;
+            padding: 10px 15px;
+            transition: 0.3s;
+        }
+
+        .navbar-nav .nav-link:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 5px;
+        }
+
+	/* Fixed Bottom Navigation */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background-color: #343a40;
+            color: white;
+            z-index: 1030;
+        }
+
+        .bottom-nav .nav-item a {
+            color: white;
+            text-align: center;
+            display: block;
+            padding: 10px 0;
+        }
+
+        .bottom-nav .nav-item a:hover {
+            color: #17a2b8;
+            text-decoration: none;
+        }
+
+        .bottom-nav i {
+            display: block;
+            font-size: 1.5rem;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 100px 0;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 600;
+            color: #ff9900;
+        }
+
+        .btn-success {
+            background-color: #ff9900;
+            border: none;
+            font-weight: bold;
+        }
+
+        .btn-success:hover {
+            background-color: #ff6600;
+        }
+
+        .footer {
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+
+        .footer a {
+            color: #ff9900;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Ensuring the footer stays at the bottom of the page */
+        .content-wrapper {
+            min-height: 100vh; /* Ensure the content takes at least full screen */
+            display: flex;
+            flex-direction: column;
+        }
+
+        .main-content {
+            flex-grow: 1; /* Allows the content to take remaining space */
+        }
+
+        /* Custom Carousel Styles */
+        .carousel-inner img {
+            width: 100%;
+            height: 500px; /* Adjust the height as needed */
+            object-fit: cover;
+        }
+
+        /* Cart and Username Bar Styles */
+        .user-info-bar {
+            background-color: #f8f9fa;
+            padding: 10px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 1.1rem;
+            border-bottom: 2px solid #ddd;
+        }
+
+        .user-info-bar .username {
+            font-weight: bold;
+        }
+
+        .user-info-bar .cart-icon {
+            font-size: 1.5rem;
+        }
+
+        .user-info-bar .logout-icon {
+            font-size: 1.5rem;
+        }
+    </style>
 </head>
+
 <body>
-    <!-- Navbar (Optional) -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container-fluid">
             <a class="navbar-brand" href="{% url 'home' %}">Food Ordering</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
@@ -21,21 +178,56 @@
                         <a class="nav-link" href="{% url 'restaurant_list' %}">Restaurants</a>
                     </li>
                     {% if user.is_authenticated %}
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'user_logout' %}">Logout</a>
-                        </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'user_logout' %}">
+                            <i class="fas fa-sign-out-alt"></i> Logout</a>
+                    </li>
                     {% else %}
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'user_login' %}">Login</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'user_signup' %}">Sign Up</a>
-                        </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'user_login' %}">
+                            <i class="fas fa-sign-in-alt"></i> Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'user_signup' %}">
+                            <i class="fas fa-user-plus"></i> Sign Up</a>
+                    </li>
                     {% endif %}
                 </ul>
             </div>
         </div>
     </nav>
+
+    
+    <!-- User Info and Cart (Placed outside the navbar, aligned to the right) -->
+    {% if user.is_authenticated %}
+    
+
+    <!-- Bottom Navigation -->
+<nav class="bottom-nav">
+    <div class="container-fluid">
+        <ul class="nav d-flex justify-content-around">
+            <li class="nav-item">
+                <a class="nav-link"  href="{% url 'home' %}">
+                    <i class="fas fa-home"></i>
+                    <span>Home</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link"  href="{% url 'view_cart' %}">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span>Cart</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link"  href="#">
+                    <i class="fas fa-user"></i>
+                    <span>Profile</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</nav>
+    {% endif %}
 
     <!-- Main Content -->
     <div class="container mt-5">
@@ -43,7 +235,15 @@
         {% endblock %}
     </div>
 
+    <!-- Footer
+    <div class="footer">
+        <p>&copy; 2025 Food Ordering System. All rights reserved. <a href="#">Privacy Policy</a> | <a href="#">Terms of
+            Service</a></p>
+    </div> -->
+
     <!-- Bootstrap JS Bundle from CDN -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
 </body>
+
 </html>

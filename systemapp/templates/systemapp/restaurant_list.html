@@ -1,13 +1,25 @@
 {% extends 'systemapp/base.html' %}
+
 {% block content %}
 <div class="container mt-5">
-    <h1 class="text-center text-primary">Restaurants</h1>
-    <ul class="list-group">
+    <h1 class="text-center text-primary mb-4">Explore Top Restaurants</h1>
+    <div class="row">
         {% for restaurant in restaurants %}
-            <li class="list-group-item">
-                <a href="{% url 'menu' restaurant.id %}" class="text-decoration-none">{{ restaurant.name }}</a>
-            </li>
+        <div class="col-md-4 col-sm-6 mb-4">
+            <div class="card shadow-sm rounded">
+                <img src="{{  MEDIA_URL  }}/media/menu_items/1000066235.jpg " class="card-img-top" alt="{{ restaurant.name }}">
+                <div class="card-body">
+                    <h5 class="card-title text-center">{{ restaurant.name }}</h5>
+                    <p class="card-text text-center">
+                        <small class="text-muted">Delicious cuisines, perfect for your taste buds!</small>
+                    </p>
+                    <a href="{% url 'menu' restaurant.id %}" class="btn btn-primary w-100">
+                        View Menu
+                    </a>
+                </div>
+            </div>
+        </div>
         {% endfor %}
-    </ul>
+    </div>
 </div>
 {% endblock %}

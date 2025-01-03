@@ -1,7 +1,8 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Restaurant, MenuItem, Order,OrderItem,  Cart
+from .models import Restaurant, MenuItem, Order,OrderItem,Cart, CartItem
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from decimal import Decimal
 
 def home(request):
     return render(request, 'systemapp/home.html')
@@ -15,65 +16,113 @@ def menu(request, restaurant_id):
     menu_items = restaurant.menuitem_set.all()
     return render(request, 'systemapp/menu.html', {'restaurant': restaurant, 'menu_items': menu_items})
 
-# View for adding items to the cart
-def add_to_cart(request, item_id):
-    item = MenuItem.objects.get(id=item_id)
-    cart, created = Cart.objects.get_or_create(user=request.user)
-    cart.menu_items.add(item)
-    cart.total_price += item.price
-    cart.save()
-    return redirect('cart')
+from django.http import JsonResponse
+from django.utils.decorators import method_decorator
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from django.urls import reverse_lazy
 
-# View for viewing the cart
-def view_cart(request):
-    cart = Cart.objects.get(user=request.user)
-    return render(request, 'systemapp/view_cart.html', {'cart': cart})
+from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
+from .models import Cart, CartItem
 
 @login_required
-def remove_from_cart(request, item_id):
-    cart = get_object_or_404(Cart, user=request.user)
-    cart_item = cart.items.filter(id=item_id).first()
+def view_cart(request):
+    # Get the user's cart (if exists)
+    cart = Cart.objects.filter(user=request.user).first()
 
-    if cart_item:
-        cart_item.delete()  # Remove the item from the cart
+    if not cart:
+        # If there's no cart, we could either create one or show an empty message
+        return render(request, 'systemapp/view_cart.html', {'cart_items': [], 'total_price': 0})
 
-    return redirect('view_cart')  # Redirect to the cart page
+    # Get the cart items for the user's cart
+    cart_items = CartItem.objects.filter(cart=cart)
 
-# View for placing an order
+    # Calculate the total price of items in the cart
+    total_price = sum(item.menu_item.price * item.quantity for item in cart_items)
 
+    # Return the cart and total price to the template
+    return render(request, 'systemapp/view_cart.html', {'cart_items': cart_items, 'total_price': total_price})
+
+@login_required
+def add_to_cart(request, menu_item_id):
+    # Get the menu item that the user wants to add to the cart
+    menu_item = get_object_or_404(MenuItem, id=menu_item_id)
+
+    # Get or create the user's cart
+    cart, created = Cart.objects.get_or_create(user=request.user)
+
+    # Get or create the CartItem, if it already exists, update the quantity
+    cart_item, created = CartItem.objects.get_or_create(cart=cart, menu_item=menu_item)
+
+    # If the item already exists in the cart, increment its quantity
+    if not created:
+        cart_item.quantity += 1
+    cart_item.save()  # Save the cart item to the database
+
+    return redirect('view_cart')  # Redirect to the view cart page
+
+@login_required
+def remove_from_cart(request, cart_item_id):
+    cart_item = get_object_or_404(CartItem, id=cart_item_id, cart__user=request.user)
+    cart_item.delete()
+    return redirect('view_cart')
+
+# Order Views
 @login_required
 def place_order(request):
-    # Get the user's cart
-    cart, created = Cart.objects.get_or_create(user=request.user)
+    cart = get_object_or_404(Cart, user=request.user)
+    cart_items = CartItem.objects.filter(cart=cart)
 
-    total_price = sum(item.menu_item.price for item in cart.cart_items.all())
-    # Create a new order
-    order = Order.objects.create(
-        user=request.user,
-        total_price=cart.total_price,
-        delivery_status='Pending'
-    )
+    if not cart_items:
+        return JsonResponse({'error': 'Your cart is empty'}, status=400)
 
-    # Add menu items from the cart to the order
-    order.menu_items.set(cart.menu_items.all())
+    total_price = sum(item.menu_item.price * item.quantity for item in cart_items)
+    order = Order.objects.create(user=request.user, total_price=total_price)
 
-    # Save the order
-    order.save()
+    for cart_item in cart_items:
+        OrderItem.objects.create(
+            order=order,
+            food_item=cart_item.menu_item,
+            quantity=cart_item.quantity,
+            subtotal=cart_item.menu_item.price * cart_item.quantity
+        )
 
-    # Create a payment for the order (simplified for now)
-    Payment.objects.create(
-        order=order,
-        payment_method="Credit Card",  # Simplified, adjust based on actual payment method
-        payment_status="Pending"
-    )
+    cart_items.delete()  # Clear the cart
+    return redirect('order_detail', order_id=order.id)
 
-    # Clear the cart after placing the order
-    cart.menu_items.clear()
-    cart.total_price = 0
-    cart.save()
+@login_required
+def order_detail(request, order_id):
+    # Get the order details for the specific order_id and user
+    order = get_object_or_404(Order, id=order_id, user=request.user)
+    
+    # Get the items associated with the order
+    order_items = order.order_items.all()
+    
+    # Get the user's profile and fetch all necessary details
+    profile = request.user.profile
+    delivery_address = profile.delivery_address
+    phone_number = profile.phone_number
+    state = profile.state
+    country = profile.country
 
-    # Redirect to the order confirmation page
-    return redirect('order_confirmation', order_id=order.id)
+    # Calculate the total price if necessary
+    total_price = sum(item.menu_item.price * item.quantity for item in order_items)
+    
+    # Pass order, order_items, delivery_address, phone_number, state, country, and total_price to the template
+    return render(request, 'systemapp/order_detail.html', {
+        'order': order,
+        'order_items': order_items,
+        'delivery_address': delivery_address,
+        'phone_number': phone_number,
+        'state': state,
+        'country': country,
+        'total_price': total_price,
+    })
+
+@login_required
+def order_list(request):
+    orders = Order.objects.filter(user=request.user).order_by('-date')
+    return render(request, 'systemapp/order_list.html', {'orders': orders})
 
 # View for order confirmation
 def order_confirmation(request, order_id):

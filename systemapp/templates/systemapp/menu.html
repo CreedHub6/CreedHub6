@@ -1,26 +1,32 @@
 {% extends 'systemapp/base.html' %}
+
 {% block content %}
-<div class="container">
-    <h1 class="text-primary">Menu - {{ restaurant.name }}</h1>
-    <form method="post" action="{% url 'place_order' %}">
-        {% csrf_token %}
-        <ul class="list-group">
-            {% for item in menu_items %}
-                <li class="list-group-item d-flex align-items-center">
-                    <!-- Display the image -->
-                    {% if item.image %}
-                        <img src="{{ item.image.url }}" alt="{{ item.name }}" class="img-thumbnail me-3" style="width: 100px; height: 100px;">
-                    {% endif %}
-                    <!-- Item details -->
-                    <div>
-                        <input type="checkbox" name="items" value="{{ item.id }}">
-                        <strong>{{ item.name }}</strong> - ${{ item.price }}
+<div class="container mt-5">
+    <h1 class="text-center text-primary mb-4">Menu - {{ restaurant.name }}</h1>
+
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        {% for item in menu_items %}
+        <div class="col">
+            <div class="card h-100 shadow-lg rounded border-0">
+                <!-- Display the image -->
+                {% if item.image %}
+                <img src="{{ item.image.url }}" class="card-img-top img-fluid" alt="{{ item.name }}" style="object-fit: cover; height: 200px;">
+                {% endif %}
+
+                <div class="card-body">
+                    <h5 class="card-title">{{ item.name }}</h5>
+                    <p class="card-text">{{ item.description }}</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span class="text-success"> ₦{{ item.price }}</span>
+                        <a href="{% url 'add_to_cart' item.id %}" class="btn btn-primary">Add to Cart</a>
                     </div>
-                </li>
-            {% endfor %}
-        </ul>
-        <textarea name="delivery_address" class="form-control mt-3" placeholder="Enter delivery address"></textarea>
-        <button type="submit" class="btn btn-success mt-3">Place Order</button>
-    </form>
+                </div>
+            </div>
+        </div>
+
+        {% endfor %}
+    </div>
 </div>
+
+<!-- Invisible Card for Spacing -->                                                                   <div class="card shadow-sm border-0" style="height: 80px; visibility: hidden;"></div>
 {% endblock %}

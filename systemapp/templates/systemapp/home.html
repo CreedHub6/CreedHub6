@@ -1,8 +1,26 @@
 {% extends 'systemapp/base.html' %}
 
 {% block content %}
-<div class="text-center">
-    <h1 class="text-primary">Welcome to the Online Food Ordering System</h1>
-    <a href="{% url 'restaurant_list' %}" class="btn btn-success mt-3">View Restaurants</a>
-</div>
+
+<!-- Image Carousel -->                                                 <div id="foodCarousel" class="carousel slide" data-bs-ride="carousel">                                                                              <div class="carousel-inner">
+            <div class="carousel-item active">
+		    <img src="{{ MESIA_URL }}/media/menu_items/1000066233.jpg" class="d-block w-100" alt="Food 1">                                                               </div>
+            <div class="carousel-item">                                                 <img src="{{ MESIA_URL }}/media/menu_items/1000066234.jpg" class="d-block w-100" alt="Food 2">
+            </div>
+            <div class="carousel-item">                                                 <img src="{{ MESIA_URL }}/media/menu_items/1000066232.jpg  " class="d-block w-100" alt="Food 3">
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#foodCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#foodCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+
+    <!-- Hero Section (Welcome) -->                                         <div class="hero">                                                          <h1 class="animate__animated animate__fadeIn">Welcome to the Online Food Ordering System</h1>                                                   <a href="{% url 'restaurant_list' %}" class="btn btn-success mt-3 animate__animated animate__zoomIn">View
+            Restaurants</a>
+    </div>
 {% endblock %}
