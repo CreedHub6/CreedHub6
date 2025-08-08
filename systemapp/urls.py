@@ -21,4 +21,10 @@ urlpatterns = [
     path('orders/<int:order_id>/', views.order_detail, name='order_detail'),
     path('place_order/', views.place_order, name='place_order'),
     path('order_confirmation/', views.order_confirmation, name='order_confirmation'),
+
+    path('payment/<int:order_id>/', views.initialize_payment, name='initialize_payment'),
+    path('verify-payment/', views.verify_payment, name='verify_payment'),
+
+    path('profile/', views.profile_view, name='profile'),
+
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -132,3 +132,4 @@ LOGIN_URL = 'user_login'
 
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/user_login/'  # Redirect after logout (optional)
+PAYSTACK_SECRET_KEY = 'sk_test_8d90ea3ebcd9b6b925625d10b0230ea3df764975'

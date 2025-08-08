@@ -100,22 +100,18 @@ def order_detail(request, order_id):
     
     # Get the user's profile and fetch all necessary details
     profile = request.user.profile
-    delivery_address = profile.delivery_address
+    delivery_address = profile.address
     phone_number = profile.phone_number
-    state = profile.state
-    country = profile.country
 
     # Calculate the total price if necessary
-    total_price = sum(item.menu_item.price * item.quantity for item in order_items)
+    total_price = sum(item.food_item.price * item.quantity for item in order_items)
     
     # Pass order, order_items, delivery_address, phone_number, state, country, and total_price to the template
     return render(request, 'systemapp/order_detail.html', {
         'order': order,
         'order_items': order_items,
-        'delivery_address': delivery_address,
+        'address':delivery_address,
         'phone_number': phone_number,
-        'state': state,
-        'country': country,
         'total_price': total_price,
     })
 
@@ -134,30 +130,97 @@ def order_history(request):
     orders = Order.objects.filter(user=request.user)
     return render(request, 'systemapp/order_history.html', {'orders': orders})
 
-@login_required
-def checkout(request):
-    # Fetch the user's cart
-    cart = get_object_or_404(Cart, user=request.user)
 
-    if not cart.items.exists():
-        return redirect('view_cart')  # Redirect if the cart is empty
+from django.shortcuts import render, redirect, get_object_or_404
+from django.http import JsonResponse
+import requests
+from .models import Cart, Order
 
-    if request.method == 'POST':
-        # Create a new order
-        order = Order.objects.create(user=request.user, total=cart.total)
-        for cart_item in cart.items.all():
-            # Create OrderItem for each item in the cart
-            OrderItem.objects.create(
-                order=order,
-                food_item=cart_item.food_item,
-                quantity=cart_item.quantity,
-                subtotal=cart_item.quantity * cart_item.food_item.price
+from django.conf import settings  # Correct way to import Django settings
+
+def initialize_payment(request, order_id):
+    PAYSTACK_SECRET_KEY = 'sk_test_8d90ea3ebcd9b6b925625d10b0230ea3df764975'
+    if request.method == "POST":
+        try:
+            order = get_object_or_404(Order, id=order_id, user=request.user)
+            total_amount = int(order.total_price * 100)  # Convert to kobo (ensure it's integer)
+
+            headers = {
+                "Authorization": f"Bearer {settings.PAYSTACK_SECRET_KEY}",
+                "Content-Type": "application/json",
+            }
+            data = {
+                "email": request.user.email,
+                "amount": str(total_amount),  # Paystack expects string amount
+               # "callback_url": settings.PAYSTACK_CALLBACK_URL,
+            }
+
+            response = requests.post(
+                "https://api.paystack.co/transaction/initialize",
+                json=data,
+                headers=headers,
             )
-        # Clear the cart after order is placed
-        cart.items.all().delete()
-        return redirect('order_confirmation', order_id=order.id)
 
-    return render(request, 'systemapp/checkout.html', {'cart': cart})
+            response_data = response.json()
+            if response_data.get('status'):
+                return redirect(response_data['data']['authorization_url'])
+            else:
+                return JsonResponse({"error": "Payment initialization failed: " + response_data.get('message', 'Unknown error')})
+
+        except Order.DoesNotExist:
+            return JsonResponse({"error": "Order not found."}, status=404)
+        except Exception as e:
+            return JsonResponse({"error": f"An error occurred: {str(e)}"}, status=500)
+
+    # For GET requests, render the payment page with order details
+    order = get_object_or_404(Order, id=order_id, user=request.user)
+    return render(request, 'systemapp/initialize_payment.html', {
+        'order': order,
+        'paystack_public_key': settings.PAYSTACK_PUBLIC_KEY,  # If you need it in frontend
+    })
+
+def verify_payment(request):
+    reference = request.GET.get('reference')
+    if not reference:
+        return JsonResponse({"error": "Reference parameter is missing"}, status=400)
+
+    try:
+        headers = {
+            "Authorization": f"Bearer {settings.PAYSTACK_SECRET_KEY}",
+        }
+
+        response = requests.get(
+            f"https://api.paystack.co/transaction/verify/{reference}",
+            headers=headers,
+        )
+
+        response_data = response.json()
+        if response_data.get('status'):
+            # Payment was successful - update your order status here
+            amount = response_data['data']['amount'] / 100  # Convert from kobo to Naira
+            email = response_data['data']['customer']['email']
+
+            # You should update your order status here
+            # Example: order.mark_as_paid()
+
+            return JsonResponse({
+                "status": "success",
+                "message": "Payment successful!",
+                "amount": amount,
+                "email": email,
+                "reference": reference
+            })
+        else:
+            return JsonResponse({
+                "status": "failed",
+                "error": response_data.get('message', 'Payment verification failed')
+            }, status=400)
+
+    except Exception as e:
+        return JsonResponse({
+            "status": "error",
+            "error": f"An error occurred: {str(e)}"
+        }, status=500)
 
 
 from django.contrib.auth.forms import AuthenticationForm
@@ -201,4 +264,18 @@ def signup(request):
 def user_logout(request):
     logout(request)
     return redirect('home')
+
+from .forms import ProfileForm
+
+@login_required
+def profile_view(request):
+    profile = request.user.profile
+    if request.method == 'POST':
+        form = ProfileForm(request.POST, request.FILES, instance=profile)
+        if form.is_valid():
+            form.save()
+            return redirect('profile')
+    else:
+        form = ProfileForm(instance=profile)
+    return render(request, 'systemapp/profile.html', {'form': form, 'profile': profile})
 
