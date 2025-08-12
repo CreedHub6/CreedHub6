@@ -24,9 +24,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-$1dw+3=6$q6=(57l_a^!%8d9-+h^__w7+zvpwv$d_^ocz8x+cl'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['  creedhub6.onrender.com '    ]
+ALLOWED_HOSTS = ['creedhub6.onrender.com']
 
 
 # Application definition
