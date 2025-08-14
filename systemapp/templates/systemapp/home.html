@@ -2,309 +2,203 @@
 {% load static %}
 
 {% block content %}
+
+<!-- Custom Styles -->
+<style>
+    /* General */
+    body {
+        font-family: 'Poppins', sans-serif;
+    }
+
+    /* Hero Section */
+    .hero-section {
+        background: linear-gradient(135deg, #ff9d76 0%, #ff6b6b 100%);
+        color: white;
+        overflow: hidden;
+        position: relative;
+    }
+    .hero-section h1 {
+        animation: fadeInUp 1s ease-out;
+    }
+    .hero-section p {
+        animation: fadeInUp 1.2s ease-out;
+    }
+    .hero-section img {
+        animation: float 3s ease-in-out infinite;
+    }
+
+    /* Carousel */
+    .carousel-item {
+        transition: transform 1s ease, opacity 1s ease;
+    }
+    .fact-icon {
+        transition: transform 0.4s ease;
+    }
+    .fact-icon:hover {
+        transform: scale(1.2) rotate(5deg);
+    }
+
+    /* Cards */
+    .card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        border-radius: 15px;
+    }
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0px 15px 30px rgba(0,0,0,0.1);
+    }
+    .card img {
+        border-top-left-radius: 15px;
+        border-top-right-radius: 15px;
+    }
+
+    /* Buttons */
+    .btn-primary {
+        background: linear-gradient(90deg, #ff6b6b, #f06595);
+        border: none;
+    }
+    .btn-primary:hover {
+        opacity: 0.9;
+        transform: scale(1.05);
+    }
+    .btn-outline-secondary:hover {
+        background: #f8f9fa;
+        color: #ff6b6b;
+        border-color: #ff6b6b;
+    }
+
+    /* Animations */
+    @keyframes fadeInUp {
+        0% { opacity: 0; transform: translateY(30px); }
+        100% { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes float {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-10px); }
+    }
+</style>
+
 <!-- Hero Section -->
-<section class="hero-section">
-    <div class="hero-background"></div>
+<section class="hero-section py-5">
     <div class="container">
-        <div class="row align-items-center min-vh-100 py-5">
-            <div class="col-lg-6">
-                <div class="hero-content animate-fade-in">
-                    <h1 class="hero-title display-3 fw-bold mb-4">
-                        Discover the World of 
-                        <span class="text-gradient">Fast Food</span>
-                    </h1>
-                    <p class="hero-subtitle lead mb-4">
-                        Experience modern fast food that combines quality ingredients, 
-                        efficient preparation, and nutritional balance to serve you better.
-                    </p>
-                    <div class="hero-buttons d-flex flex-wrap gap-3">
-                        <a href="{{ url_for('restaurant_list') }}" class="btn btn-primary-gradient btn-lg px-4 py-3">
-                            <i class="fas fa-shopping-bag me-2"></i>
-                            Order Now
-                        </a>
-                        <a href="#industry-facts" class="btn btn-outline-light btn-lg px-4 py-3">
-                            <i class="fas fa-info-circle me-2"></i>
-                            Learn More
-                        </a>
-                    </div>
+        <div class="row align-items-center">
+            <div class="col-md-6 text-white">
+                <h1 class="display-4 fw-bold mb-4">Discover the World of Fast Food</h1>
+                <p class="lead mb-4">Learn how modern fast food combines quality ingredients, efficient preparation, and nutritional balance to serve you better.</p>
+                <div class="d-flex gap-3">
+                    <a href="{% url 'restaurant_list' %}" class="btn btn-primary btn-lg shadow">Order Now</a>
+                    <a href="#industry-facts" class="btn btn-outline-secondary btn-lg shadow">Learn More</a>
                 </div>
             </div>
-            <div class="col-lg-6">
-                <div class="hero-image animate-slide-in">
-                    <div class="floating-card">
-                        <img src="https://images.unsplash.com/photo-1571091718767-18b5b1457add?w=600&h=400&fit=crop&crop=center" 
-                             alt="Fast Food Preparation" 
-                             class="img-fluid rounded-4 shadow-lg">
-                        <div class="floating-badge">
-                            <i class="fas fa-star text-warning"></i>
-                            <span class="fw-bold">4.9</span>
-                        </div>
-                    </div>
-                </div>
+            <div class="col-md-6 text-center">
+                <img src="{% static 'images/food-hero.jpg' %}" alt="Fast Food Preparation" class="img-fluid rounded shadow-lg">
             </div>
         </div>
-    </div>
-    
-    <!-- Scroll Indicator -->
-    <div class="scroll-indicator">
-        <div class="scroll-line"></div>
-        <i class="fas fa-chevron-down"></i>
     </div>
 </section>
 
 <!-- Industry Carousel -->
-<section id="industry-facts" class="py-5 bg-light-gradient">
+<section id="industry-facts" class="py-5 bg-white">
     <div class="container">
-        <div class="text-center mb-5">
-            <h2 class="section-title display-5 fw-bold mb-3">Fast Food Industry Insights</h2>
-            <p class="section-subtitle text-muted">Discover what makes modern fast food exceptional</p>
-        </div>
-        
-        <div id="industryCarousel" class="carousel slide carousel-modern" data-bs-ride="carousel" data-bs-interval="5000">
-            <div class="carousel-indicators">
-                <button type="button" data-bs-target="#industryCarousel" data-bs-slide-to="0" class="active"></button>
-                <button type="button" data-bs-target="#industryCarousel" data-bs-slide-to="1"></button>
-                <button type="button" data-bs-target="#industryCarousel" data-bs-slide-to="2"></button>
-            </div>
-            
+        <h2 class="text-center mb-5 fw-bold">Fast Food Industry Insights</h2>
+        <div id="industryCarousel" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-inner">
-                <div class="carousel-item active">
-                    <div class="row justify-content-center">
-                        <div class="col-lg-8 text-center">
-                            <div class="fact-card">
-                                <div class="fact-icon mb-4">
-                                    <div class="icon-circle bg-success-gradient">
-                                        <i class="fas fa-seedling fa-3x text-white"></i>
-                                    </div>
-                                </div>
-                                <h3 class="fw-bold mb-3">Quality Ingredients</h3>
-                                <p class="lead text-muted">
-                                    Modern fast food chains source fresh, high-quality ingredients from trusted suppliers, 
-                                    with many implementing farm-to-table programs for better traceability.
-                                </p>
-                            </div>
-                        </div>
+                <div class="carousel-item active text-center">
+                    <div class="fact-icon mb-4">
+                        <i class="fas fa-seedling fa-3x text-success"></i>
                     </div>
+                    <h3>Quality Ingredients</h3>
+                    <p class="lead">Modern fast food chains source fresh, high-quality ingredients from trusted suppliers, with many implementing farm-to-table programs for better traceability.</p>
                 </div>
-                
-                <div class="carousel-item">
-                    <div class="row justify-content-center">
-                        <div class="col-lg-8 text-center">
-                            <div class="fact-card">
-                                <div class="fact-icon mb-4">
-                                    <div class="icon-circle bg-primary-gradient">
-                                        <i class="fas fa-clock fa-3x text-white"></i>
-                                    </div>
-                                </div>
-                                <h3 class="fw-bold mb-3">Efficient Preparation</h3>
-                                <p class="lead text-muted">
-                                    Standardized cooking processes ensure both speed and consistency, with many restaurants 
-                                    implementing advanced food safety protocols that exceed industry standards.
-                                </p>
-                            </div>
-                        </div>
+                <div class="carousel-item text-center">
+                    <div class="fact-icon mb-4">
+                        <i class="fas fa-clock fa-3x text-primary"></i>
                     </div>
+                    <h3>Efficient Preparation</h3>
+                    <p class="lead">Standardized cooking processes ensure both speed and consistency, with many restaurants implementing advanced food safety protocols that exceed industry standards.</p>
                 </div>
-                
-                <div class="carousel-item">
-                    <div class="row justify-content-center">
-                        <div class="col-lg-8 text-center">
-                            <div class="fact-card">
-                                <div class="fact-icon mb-4">
-                                    <div class="icon-circle bg-danger-gradient">
-                                        <i class="fas fa-utensils fa-3x text-white"></i>
-                                    </div>
-                                </div>
-                                <h3 class="fw-bold mb-3">Nutritional Options</h3>
-                                <p class="lead text-muted">
-                                    Today's fast food offers diverse menu choices including vegetarian, vegan, and low-calorie options, 
-                                    with detailed nutritional information available for informed decisions.
-                                </p>
-                            </div>
-                        </div>
+                <div class="carousel-item text-center">
+                    <div class="fact-icon mb-4">
+                        <i class="fas fa-utensils fa-3x text-danger"></i>
                     </div>
+                    <h3>Nutritional Options</h3>
+                    <p class="lead">Today's fast food offers diverse menu choices including vegetarian, vegan, and low-calorie options, with detailed nutritional information available for informed decisions.</p>
                 </div>
             </div>
-            
             <button class="carousel-control-prev" type="button" data-bs-target="#industryCarousel" data-bs-slide="prev">
-                <div class="carousel-control-icon prev">
-                    <i class="fas fa-chevron-left"></i>
-                </div>
-                <span class="visually-hidden">Previous</span>
+                <span class="carousel-control-prev-icon"></span>
             </button>
             <button class="carousel-control-next" type="button" data-bs-target="#industryCarousel" data-bs-slide="next">
-                <div class="carousel-control-icon next">
-                    <i class="fas fa-chevron-right"></i>
-                </div>
-                <span class="visually-hidden">Next</span>
+                <span class="carousel-control-next-icon"></span>
             </button>
         </div>
     </div>
 </section>
 
 <!-- Popular Choices -->
-<section class="py-5 bg-white">
+<section class="py-5 bg-light">
     <div class="container">
-        <div class="text-center mb-5">
-            <h2 class="section-title display-5 fw-bold mb-3">Popular Choices</h2>
-            <p class="section-subtitle text-muted">Discover our most loved dishes</p>
-        </div>
-        
+        <h2 class="text-center mb-5 fw-bold">Popular Choices</h2>
         <div class="row g-4">
             <!-- Burger -->
-            <div class="col-lg-4 col-md-6">
-                <div class="menu-card">
-                    <div class="card-image">
-                        {% if burger.image_url %}
-                            <img src="{{ burger.image_url }}" alt="{{ burger.name }}" class="img-fluid">
-                        {% else %}
-                            <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400&h=300&fit=crop" alt="Burger Meal" class="img-fluid">
-                        {% endif %}
-                        <div class="card-overlay">
-                            <button class="btn btn-primary-gradient btn-sm">
-                                <i class="fas fa-plus me-1"></i>
-                                Add to Cart
-                            </button>
-                        </div>
-                    </div>
-                    <div class="card-content">
-                        <h5 class="card-title fw-bold mb-2">{{ burger.name if burger.name else "Classic Burger Combo" }}</h5>
-                        <p class="card-text text-muted mb-3">{{ burger.description if burger.description else "Our signature beef patty with fresh vegetables and special sauce, served with fries and drink." }}</p>
-                        <div class="card-footer d-flex justify-content-between align-items-center">
-                            <div class="calories">
-                                <small class="text-muted">
-                                    <i class="fas fa-fire me-1"></i>
-                                    {{ burger.calories if burger.calories else 550 }} kcal
-                                </small>
-                            </div>
-                            <div class="price fw-bold text-primary">
-                                ${{ "%.2f"|format(burger.price if burger.price else 8.99) }}
-                            </div>
+            <div class="col-md-4">
+                <div class="card h-100 shadow-sm">
+                    {% if burger and burger.image %}
+                        <img src="{{ burger.image.url }}" class="card-img-top" alt="{{ burger.name }}">
+                    {% else %}
+                        <img src="https://source.unsplash.com/400x300/?burger,meal" class="card-img-top" alt="Burger Meal">
+                    {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title">{{ burger.name|default:"Classic Burger Combo" }}</h5>
+                        <p class="card-text">{{ burger.description|default:"Our signature beef patty with fresh vegetables and special sauce, served with fries and drink." }}</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="text-muted">{{ burger.calories|default:550 }} kcal</span>
+                            <span class="fw-bold text-danger">${{ burger.price|default:"8.99" }}</span>
                         </div>
                     </div>
                 </div>
             </div>
-
             <!-- Chicken -->
-            <div class="col-lg-4 col-md-6">
-                <div class="menu-card">
-                    <div class="card-image">
-                        {% if chicken.image_url %}
-                            <img src="{{ chicken.image_url }}" alt="{{ chicken.name }}" class="img-fluid">
-                        {% else %}
-                            <img src="https://images.unsplash.com/photo-1562967914-608f82629710?w=400&h=300&fit=crop" alt="Crispy Chicken" class="img-fluid">
-                        {% endif %}
-                        <div class="card-overlay">
-                            <button class="btn btn-primary-gradient btn-sm">
-                                <i class="fas fa-plus me-1"></i>
-                                Add to Cart
-                            </button>
-                        </div>
-                    </div>
-                    <div class="card-content">
-                        <h5 class="card-title fw-bold mb-2">{{ chicken.name if chicken.name else "Crispy Chicken Basket" }}</h5>
-                        <p class="card-text text-muted mb-3">{{ chicken.description if chicken.description else "Tender chicken pieces with our special seasoning, served with coleslaw and dipping sauce." }}</p>
-                        <div class="card-footer d-flex justify-content-between align-items-center">
-                            <div class="calories">
-                                <small class="text-muted">
-                                    <i class="fas fa-fire me-1"></i>
-                                    {{ chicken.calories if chicken.calories else 480 }} kcal
-                                </small>
-                            </div>
-                            <div class="price fw-bold text-primary">
-                                ${{ "%.2f"|format(chicken.price if chicken.price else 7.99) }}
-                            </div>
+            <div class="col-md-4">
+                <div class="card h-100 shadow-sm">
+                    {% if chicken and chicken.image %}
+                        <img src="{{ chicken.image.url }}" class="card-img-top" alt="{{ chicken.name }}">
+                    {% else %}
+                        <img src="https://source.unsplash.com/400x300/?fried,chicken" class="card-img-top" alt="Crispy Chicken">
+                    {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title">{{ chicken.name|default:"Crispy Chicken Basket" }}</h5>
+                        <p class="card-text">{{ chicken.description|default:"Tender chicken pieces with our special seasoning, served with coleslaw and dipping sauce." }}</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="text-muted">{{ chicken.calories|default:480 }} kcal</span>
+                            <span class="fw-bold text-danger">${{ chicken.price|default:"7.99" }}</span>
                         </div>
                     </div>
                 </div>
             </div>
-
             <!-- Salad -->
-            <div class="col-lg-4 col-md-6">
-                <div class="menu-card">
-                    <div class="card-image">
-                        {% if salad.image_url %}
-                            <img src="{{ salad.image_url }}" alt="{{ salad.name }}" class="img-fluid">
-                        {% else %}
-                            <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=400&h=300&fit=crop" alt="Fresh Salad" class="img-fluid">
-                        {% endif %}
-                        <div class="card-overlay">
-                            <button class="btn btn-primary-gradient btn-sm">
-                                <i class="fas fa-plus me-1"></i>
-                                Add to Cart
-                            </button>
-                        </div>
-                    </div>
-                    <div class="card-content">
-                        <h5 class="card-title fw-bold mb-2">{{ salad.name if salad.name else "Garden Fresh Salad" }}</h5>
-                        <p class="card-text text-muted mb-3">{{ salad.description if salad.description else "Mixed greens with cherry tomatoes, cucumbers, and your choice of dressing." }}</p>
-                        <div class="card-footer d-flex justify-content-between align-items-center">
-                            <div class="calories">
-                                <small class="text-muted">
-                                    <i class="fas fa-fire me-1"></i>
-                                    {{ salad.calories if salad.calories else 220 }} kcal
-                                </small>
-                            </div>
-                            <div class="price fw-bold text-primary">
-                                ${{ "%.2f"|format(salad.price if salad.price else 6.49) }}
-                            </div>
+            <div class="col-md-4">
+                <div class="card h-100 shadow-sm">
+                    {% if salad and salad.image %}
+                        <img src="{{ salad.image.url }}" class="card-img-top" alt="{{ salad.name }}">
+                    {% else %}
+                        <img src="https://source.unsplash.com/400x300/?salad,healthy" class="card-img-top" alt="Fresh Salad">
+                    {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title">{{ salad.name|default:"Garden Fresh Salad" }}</h5>
+                        <p class="card-text">{{ salad.description|default:"Mixed greens with cherry tomatoes, cucumbers, and your choice of dressing." }}</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="text-muted">{{ salad.calories|default:220 }} kcal</span>
+                            <span class="fw-bold text-danger">${{ salad.price|default:"6.49" }}</span>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        
-        <div class="text-center mt-5">
-            <a href="{{ url_for('restaurant_list') }}" class="btn btn-primary-gradient btn-lg px-5 py-3">
-                <i class="fas fa-utensils me-2"></i>
-                View Full Menu
-            </a>
+        <div class="text-center mt-4">
+            <a href="#" class="btn btn-primary btn-lg px-5 shadow">View Full Menu</a>
         </div>
     </div>
 </section>
 
-<!-- Features Section -->
-<section class="py-5 bg-light-gradient">
-    <div class="container">
-        <div class="row g-4">
-            <div class="col-lg-3 col-md-6">
-                <div class="feature-card text-center">
-                    <div class="feature-icon mb-3">
-                        <i class="fas fa-shipping-fast text-primary"></i>
-                    </div>
-                    <h5 class="fw-bold mb-2">Fast Delivery</h5>
-                    <p class="text-muted">Quick delivery in 30 minutes or less</p>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6">
-                <div class="feature-card text-center">
-                    <div class="feature-icon mb-3">
-                        <i class="fas fa-leaf text-success"></i>
-                    </div>
-                    <h5 class="fw-bold mb-2">Fresh Ingredients</h5>
-                    <p class="text-muted">Always fresh, high-quality ingredients</p>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6">
-                <div class="feature-card text-center">
-                    <div class="feature-icon mb-3">
-                        <i class="fas fa-mobile-alt text-info"></i>
-                    </div>
-                    <h5 class="fw-bold mb-2">Easy Ordering</h5>
-                    <p class="text-muted">Order online or through our mobile app</p>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6">
-                <div class="feature-card text-center">
-                    <div class="feature-icon mb-3">
-                        <i class="fas fa-heart text-danger"></i>
-                    </div>
-                    <h5 class="fw-bold mb-2">Made with Love</h5>
-                    <p class="text-muted">Every meal prepared with care and passion</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
 {% endblock %}
-
