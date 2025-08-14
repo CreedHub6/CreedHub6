@@ -1,15 +1,33 @@
 from pathlib import Path
 import os
+import environ
 
+# ---------------------------------------------------------------------
 # Base directory
+# ---------------------------------------------------------------------
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Security
-SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-$1dw+3=6$q6=(57l_a^!%8d9-+h^__w7+zvpwv$d_^ocz8x+cl')
+# ---------------------------------------------------------------------
+# Load environment variables from .env.local
+# ---------------------------------------------------------------------
+env = environ.Env()
+env_file = os.path.join(BASE_DIR, '.env.local')
+if os.path.exists(env_file):
+    environ.Env.read_env(env_file)
+
+# ---------------------------------------------------------------------
+# Security settings
+# ---------------------------------------------------------------------
+SECRET_KEY = env(
+    'SECRET_KEY',
+    default='django-insecure-$1dw+3=6$q6=(57l_a^!%8d9-+h^__w7+zvpwv$d_^ocz8x+cl'
+)
 DEBUG = False
 ALLOWED_HOSTS = ['creedhub6.onrender.com']
 
+# ---------------------------------------------------------------------
 # Installed apps
+# ---------------------------------------------------------------------
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -22,10 +40,13 @@ INSTALLED_APPS = [
     'cloudinary',
     'cloudinary_storage',
 
+    # Local apps
     'systemapp',
 ]
 
+# ---------------------------------------------------------------------
 # Middleware
+# ---------------------------------------------------------------------
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',  # Static file serving
@@ -37,7 +58,9 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-# URLs & Templates
+# ---------------------------------------------------------------------
+# URL configuration & Templates
+# ---------------------------------------------------------------------
 ROOT_URLCONF = 'onlinefoodorderingsystem.urls'
 
 TEMPLATES = [
@@ -58,7 +81,9 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'onlinefoodorderingsystem.wsgi.application'
 
+# ---------------------------------------------------------------------
 # Database
+# ---------------------------------------------------------------------
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -66,7 +91,9 @@ DATABASES = {
     }
 }
 
+# ---------------------------------------------------------------------
 # Password validation
+# ---------------------------------------------------------------------
 AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
     {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
@@ -74,35 +101,47 @@ AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
 
+# ---------------------------------------------------------------------
 # Internationalization
+# ---------------------------------------------------------------------
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_TZ = True
 
+# ---------------------------------------------------------------------
 # Static files (CSS, JS)
+# ---------------------------------------------------------------------
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-# Cloudinary media storage
+# ---------------------------------------------------------------------
+# Media storage (Cloudinary)
+# ---------------------------------------------------------------------
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': os.getenv('CLOUDINARY_CLOUD_NAME'),
-    'API_KEY': os.getenv('CLOUDINARY_API_KEY'),
-    'API_SECRET': os.getenv('CLOUDINARY_API_SECRET'),
+    'CLOUD_NAME': env('CLOUDINARY_CLOUD_NAME'),
+    'API_KEY': env('CLOUDINARY_API_KEY'),
+    'API_SECRET': env('CLOUDINARY_API_SECRET'),
 }
 
+# ---------------------------------------------------------------------
 # Default primary key field type
+# ---------------------------------------------------------------------
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# ---------------------------------------------------------------------
 # Authentication redirects
+# ---------------------------------------------------------------------
 LOGIN_URL = 'user_login'
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/user_login/'
 
-# Paystack secret key (keep in environment variables in production)
-PAYSTACK_SECRET_KEY = os.getenv(
+# ---------------------------------------------------------------------
+# Paystack
+# ---------------------------------------------------------------------
+PAYSTACK_SECRET_KEY = env(
     'PAYSTACK_SECRET_KEY',
-    'sk_test_8d90ea3ebcd9b6b925625d10b0230ea3df764975'
+    default='sk_test_8d90ea3ebcd9b6b925625d10b0230ea3df764975'
 )
