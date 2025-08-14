@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block content %}
-<!-- Hero Section with Industry Info -->
+<!-- Hero Section -->
 <section class="hero-section bg-light py-5">
     <div class="container">
         <div class="row align-items-center">
@@ -21,7 +21,7 @@
     </div>
 </section>
 
-<!-- Industry Information Carousel -->
+<!-- Industry Carousel -->
 <section id="industry-facts" class="py-5 bg-white">
     <div class="container">
         <h2 class="text-center mb-5">Fast Food Industry Insights</h2>
@@ -73,151 +73,73 @@
     </div>
 </section>
 
-<!-- Menu Highlights -->
+<!-- Popular Choices -->
 <section class="py-5 bg-light">
     <div class="container">
         <h2 class="text-center mb-5">Popular Choices</h2>
         <div class="row g-4">
+
+            <!-- Burger -->
             <div class="col-md-4">
                 <div class="card h-100 border-0 shadow-sm">
-                    <img src="{{ MEDIA_URL }}/media/menu_items/1000066233.jpg" class="card-img-top" alt="Burger Meal">
+                    {% if burger and burger.image %}
+                        <img src="{{ burger.image.url }}" class="card-img-top" alt="{{ burger.name }}">
+                    {% else %}
+                        <img src="https://source.unsplash.com/400x300/?burger,meal" class="card-img-top" alt="Burger Meal">
+                    {% endif %}
                     <div class="card-body">
-                        <h5 class="card-title">Classic Burger Combo</h5>
-                        <p class="card-text">Our signature beef patty with fresh vegetables and special sauce, served with fries and drink.</p>
+                        <h5 class="card-title">{{ burger.name|default:"Classic Burger Combo" }}</h5>
+                        <p class="card-text">{{ burger.description|default:"Our signature beef patty with fresh vegetables and special sauce, served with fries and drink." }}</p>
                         <div class="d-flex justify-content-between align-items-center">
-                            <span class="text-muted">550 kcal</span>
-                            <span class="fw-bold">$8.99</span>
+                            <span class="text-muted">{{ burger.calories|default:550 }} kcal</span>
+                            <span class="fw-bold">${{ burger.price|default:"8.99" }}</span>
                         </div>
                     </div>
                 </div>
             </div>
+
+            <!-- Chicken -->
             <div class="col-md-4">
                 <div class="card h-100 border-0 shadow-sm">
-                    <img src="{{ MEDIA_URL }}/media/menu_items/1000066234.jpg" class="card-img-top" alt="Chicken Meal">
+                    {% if chicken and chicken.image %}
+                        <img src="{{ chicken.image.url }}" class="card-img-top" alt="{{ chicken.name }}">
+                    {% else %}
+                        <img src="https://source.unsplash.com/400x300/?fried,chicken" class="card-img-top" alt="Crispy Chicken">
+                    {% endif %}
                     <div class="card-body">
-                        <h5 class="card-title">Crispy Chicken Basket</h5>
-                        <p class="card-text">Tender chicken pieces with our special seasoning, served with coleslaw and dipping sauce.</p>
+                        <h5 class="card-title">{{ chicken.name|default:"Crispy Chicken Basket" }}</h5>
+                        <p class="card-text">{{ chicken.description|default:"Tender chicken pieces with our special seasoning, served with coleslaw and dipping sauce." }}</p>
                         <div class="d-flex justify-content-between align-items-center">
-                            <span class="text-muted">480 kcal</span>
-                            <span class="fw-bold">$7.99</span>
+                            <span class="text-muted">{{ chicken.calories|default:480 }} kcal</span>
+                            <span class="fw-bold">${{ chicken.price|default:"7.99" }}</span>
                         </div>
                     </div>
                 </div>
             </div>
+
+            <!-- Salad -->
             <div class="col-md-4">
                 <div class="card h-100 border-0 shadow-sm">
-                    <img src="{{ MEDIA_URL }}/media/menu_items/1000066232.jpg" class="card-img-top" alt="Salad">
+                    {% if salad and salad.image %}
+                        <img src="{{ salad.image.url }}" class="card-img-top" alt="{{ salad.name }}">
+                    {% else %}
+                        <img src="https://source.unsplash.com/400x300/?salad,healthy" class="card-img-top" alt="Fresh Salad">
+                    {% endif %}
                     <div class="card-body">
-                        <h5 class="card-title">Garden Fresh Salad</h5>
-                        <p class="card-text">Mixed greens with cherry tomatoes, cucumbers, and your choice of dressing.</p>
+                        <h5 class="card-title">{{ salad.name|default:"Garden Fresh Salad" }}</h5>
+                        <p class="card-text">{{ salad.description|default:"Mixed greens with cherry tomatoes, cucumbers, and your choice of dressing." }}</p>
                         <div class="d-flex justify-content-between align-items-center">
-                            <span class="text-muted">220 kcal</span>
-                            <span class="fw-bold">$6.49</span>
+                            <span class="text-muted">{{ salad.calories|default:220 }} kcal</span>
+                            <span class="fw-bold">${{ salad.price|default:"6.49" }}</span>
                         </div>
                     </div>
                 </div>
             </div>
+
         </div>
         <div class="text-center mt-4">
-            
-		 <a href="#" class="btn btn-primary w-100">
-                        View Full Menu
-                    </a>
+            <a href="#" class="btn btn-primary w-100">View Full Menu</a>
         </div>
     </div>
 </section>
-
-<!-- How It Works -->
-<section class="py-5 bg-white">
-    <div class="container">
-        <h2 class="text-center mb-5">Our Food Preparation Process</h2>
-        <div class="row g-4">
-            <div class="col-md-3 text-center">
-                <div class="process-step p-4 rounded-circle bg-primary text-white d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
-                    <i class="fas fa-truck fa-2x"></i>
-                </div>
-                <h4>Fresh Delivery</h4>
-                <p>Daily deliveries from local farms ensure peak freshness</p>
-            </div>
-            <div class="col-md-3 text-center">
-                <div class="process-step p-4 rounded-circle bg-success text-white d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
-                    <i class="fas fa-temperature-low fa-2x"></i>
-                </div>
-                <h4>Proper Storage</h4>
-                <p>Temperature-controlled storage maintains quality</p>
-            </div>
-            <div class="col-md-3 text-center">
-                <div class="process-step p-4 rounded-circle bg-warning text-white d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
-                    <i class="fas fa-cheese fa-2x"></i>
-                </div>
-                <h4>Expert Preparation</h4>
-                <p>Trained chefs follow strict quality guidelines</p>
-            </div>
-            <div class="col-md-3 text-center">
-                <div class="process-step p-4 rounded-circle bg-danger text-white d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
-                    <i class="fas fa-heartbeat fa-2x"></i>
-                </div>
-                <h4>Quality Check</h4>
-                <p>Every order inspected before delivery</p>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Testimonials -->
-<section class="py-5 bg-light">
-    <div class="container">
-        <h2 class="text-center mb-5">What Our Customers Say</h2>
-        <div class="row">
-            <div class="col-md-4 mb-4">
-                <div class="card h-100">
-                    <div class="card-body">
-                        <div class="mb-3 text-warning">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                        </div>
-                        <p class="card-text">"I was pleasantly surprised by the quality and freshness of the ingredients. Much better than typical fast food!"</p>
-                        <div class="d-flex align-items-center">
-                            <img src="{% static 'images/user1.jpg' %}" class="rounded-circle me-3" width="50" alt="Customer">
-                            <div>
-                                <h6 class="mb-0">Sarah Johnson</h6>
-                                <small class="text-muted">Regular Customer</small>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Add more testimonials -->
-        </div>
-    </div>
-</section>
-{% endblock %}
-
-{% block extra_css %}
-<style>
-    .hero-section {
-        background: linear-gradient(rgba(255,255,255,0.9), rgba(255,255,255,0.9)), url('{% static "images/food-bg.jpg" %}');
-        background-size: cover;
-        background-position: center;
-    }
-    .fact-icon {
-        color: var(--bs-primary);
-    }
-    .process-step {
-        transition: transform 0.3s;
-    }
-    .process-step:hover {
-        transform: scale(1.1);
-    }
-    .card {
-        transition: transform 0.3s, box-shadow 0.3s;
-    }
-    .card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-    }
-</style>
 {% endblock %}
