@@ -1,73 +1,52 @@
 {% extends 'systemapp/base.html' %}
 
 {% block content %}
-<section class="bg-primary-gradient text-white py-5 shadow-sm">
-    <div class="container text-center">
-        <h1 class="fw-bold display-5">Explore Top Restaurants</h1>
-        <p class="lead opacity-75">Discover the best cuisines, crafted just for you</p>
-    </div>
-</section>
 
-<section class="py-5">
-    <div class="container">
-        <div class="row g-4">
-            {% for restaurant in restaurants %}
-            <div class="col-lg-4 col-md-6">
-                <div class="card h-100 border-0 shadow-lg rounded-4 overflow-hidden transition-all hover-scale">
-                    <div class="position-relative">
-                        {% if restaurant.image %}
-                            <img src="{{ restaurant.image.url }}" 
-                                 class="card-img-top" 
-                                 alt="{{ restaurant.name }}"
-                                 style="height: 220px; object-fit: cover;">
-                        {% else %}
-                            <img src="{{ MEDIA_URL }}menu_items/example.jpg" 
-                                 class="card-img-top" 
-                                 alt="Default Image"
-                                 style="height: 220px; object-fit: cover;">
-                        {% endif %}
-                        <span class="badge bg-warning text-dark position-absolute top-0 start-0 m-3 px-3 py-2 rounded-pill shadow-sm">
-                            Featured
-                        </span>
-                    </div>
-                    <div class="card-body text-center d-flex flex-column">
-                        <h5 class="fw-bold mb-2">{{ restaurant.name }}</h5>
-                        <p class="text-muted small flex-grow-1">{{ restaurant.address }}</p>
-                        <a href="{% url 'restaurant_detail' restaurant.id %}" 
-                           class="btn btn-primary-gradient rounded-pill fw-semibold py-2 px-4 mt-auto">
-                            <i class="fas fa-book-open me-2"></i> View Menu
-                        </a>
-                    </div>
-                </div>
-            </div>
-            {% empty %}
-            <div class="col-12 text-center py-5">
-                <i class="fas fa-store fa-4x text-muted mb-3"></i>
-                <h3 class="text-muted">No restaurants found</h3>
-                <p class="text-muted">We’re adding more locations soon — stay tuned!</p>
-            </div>
-            {% endfor %}
-        </div>
-    </div>
-</section>
+<section class="page-header bg-primary-gradient text-white py-5">  
+    <div class="container">  
+        <div class="row align-items-center">  
+            <div class="col-md-8">  
+                <h1 class="display-4 fw-bold mb-3">Explore Top Restaurants</h1>  
+                <p class="lead mb-0">Discover the best cuisines, crafted just for you</p>  
+            </div>  
+            <div class="col-md-4 text-md-end">  
+                <i class="fas fa-utensils fa-4x opacity-50"></i>  
+            </div>  
+        </div>  
+    </div>  
+</section>  <section class="py-5">  
+    <div class="container">  
+        <div class="row g-4">  
+            {% for restaurant in restaurants %}  
+            <div class="col-lg-4 col-md-6">  
+                <div class="card shadow-sm border-0 rounded-4 overflow-hidden h-100 d-flex flex-column">  
+                    <div class="position-relative">  
+                        <img src="{{ MEDIA_URL }}menu_items/1000066235.jpg"   
+                             class="card-img-top"   
+                             alt="{{ restaurant.name }}"  
+                             style="height: 220px; object-fit: cover;">  
+                        <span class="badge bg-warning text-dark position-absolute top-0 start-0 m-3 px-3 py-2 rounded-pill shadow-sm">  
+                            Featured  
+                        </span>  
+                    </div>  
+                    <div class="card-body flex-grow-1 text-center">  
+                        <h5 class="fw-bold mb-2">{{ restaurant.name }}</h5>  
+                        <p class="text-muted mb-3">Delicious cuisines, perfect for your taste buds!</p>  
+                        <a href="{% url 'menu' restaurant.id %}" class="btn btn-primary-gradient w-100 rounded-pill fw-semibold py-2">  
+                            <i class="fas fa-book-open me-2"></i> View Menu  
+                        </a>  
+                    </div>  
+                </div>  
+            </div>  
+            {% endfor %}  
+        </div>  {% if not restaurants %}  
+    <div class="text-center py-5">  
+        <i class="fas fa-store fa-4x text-muted mb-3"></i>  
+        <h3 class="text-muted">No restaurants found</h3>  
+        <p class="text-muted">We're working on adding more locations in your area.</p>  
+    </div>  
+    {% endif %}  
+</div>
 
-<style>
-/* Smooth hover zoom */
-.hover-scale:hover {
-    transform: translateY(-5px) scale(1.02);
-    transition: all 0.3s ease-in-out;
-}
-.btn-primary-gradient {
-    background: linear-gradient(45deg, #007bff, #00d4ff);
-    border: none;
-    color: white;
-}
-.btn-primary-gradient:hover {
-    opacity: 0.9;
-    color: white;
-}
-.bg-primary-gradient {
-    background: linear-gradient(45deg, #007bff, #00d4ff);
-}
-</style>
+</section>  
 {% endblock %}
