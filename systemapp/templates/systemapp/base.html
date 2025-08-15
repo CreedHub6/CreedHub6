@@ -4,22 +4,201 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Online Food Ordering System</title>
-
-  <!-- Bootstrap -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
-
-  <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet"/>
-
-  <!-- Font Awesome -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
 
-  <!-- Custom Styles -->
-  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <style>
+    :root{
+      --brand-1:#ff7f50;
+      --brand-2:#ff9900;
+      --brand-dark:#e05500;
+      --text:#333;
+      --muted:#666;
+      --bg:#fdfdfd;
+      --radius:18px;
+      --shadow:0 8px 30px rgba(0,0,0,.08);
+    }
+
+    *{box-sizing:border-box}
+    body{
+      font-family:'Poppins',sans-serif;
+      color:var(--text);
+      background:var(--bg);
+      padding-top:72px;
+      padding-bottom:72px;
+    }
+
+    .navbar{
+      background:linear-gradient(90deg,var(--brand-1),var(--brand-2));
+      box-shadow:0 2px 10px rgba(0,0,0,.1);
+      transition:transform .25s ease;
+    }
+    .navbar-brand{
+      font-size:1.5rem;
+      font-weight:700;
+      color:#fff;
+      letter-spacing:.5px;
+    }
+    .navbar-dark .navbar-nav .nav-link{
+      color:#fff;
+      font-weight:500;
+      transition:opacity .2s ease;
+    }
+    .navbar-dark .navbar-nav .nav-link:hover{opacity:.85}
+
+    .hero{
+      position:relative;
+      overflow:hidden;
+      padding:4rem 0 3rem;
+      background:linear-gradient(180deg,#fff7e6 0%, #ffffff 100%);
+    }
+    .hero .badge{
+      background:rgba(255,153,0,.15);
+      color:var(--brand-dark);
+      border-radius:999px;
+      padding:.5rem .9rem;
+      font-weight:600;
+      font-size:.85rem;
+    }
+    .hero-title{
+      font-weight:800;
+      font-size:clamp(2rem,3.2vw,3rem);
+      color:var(--brand-dark);
+      margin:1rem 0 .5rem;
+      line-height:1.15;
+    }
+    .hero-sub{
+      color:var(--muted);
+      font-size:1.05rem;
+      max-width:680px;
+      margin-inline:auto;
+    }
+    .search-wrap{
+      max-width:760px;
+      margin:1.75rem auto 0;
+      background:#fff;
+      border-radius:999px;
+      box-shadow:var(--shadow);
+      padding:.4rem .5rem;
+      display:flex;
+      gap:.5rem;
+      align-items:center;
+    }
+    .search-wrap input{
+      border:0;
+      outline:0;
+      padding:.9rem 1rem;
+      flex:1;
+      font-size:1rem;
+      border-radius:999px;
+    }
+    .btn-primary-brand{
+      background:linear-gradient(90deg,var(--brand-1),var(--brand-2));
+      border:0;
+      color:#fff;
+      border-radius:999px;
+      padding:.9rem 1.25rem;
+      font-weight:600;
+      transition:transform .15s ease, box-shadow .15s ease;
+    }
+    .btn-primary-brand:hover{transform:translateY(-2px); box-shadow:var(--shadow)}
+
+    .section{
+      padding:2.5rem 0;
+    }
+
+    .chip-scroll{
+      display:flex;
+      gap:.6rem;
+      overflow:auto;
+      padding-bottom:.2rem;
+      scroll-snap-type:x proximity;
+    }
+    .chip{
+      scroll-snap-align:start;
+      background:#fff;
+      border:1px solid #eee;
+      padding:.55rem .95rem;
+      border-radius:999px;
+      font-weight:600;
+      font-size:.9rem;
+      white-space:nowrap;
+      transition:background .2s ease,border-color .2s ease, transform .1s ease;
+    }
+    .chip:hover{background:#fffaf3; border-color:#ffe0b3; transform:translateY(-1px)}
+
+    .card-food{
+      border:0;
+      border-radius:var(--radius);
+      overflow:hidden;
+      box-shadow:var(--shadow);
+      transition:transform .2s ease;
+      height:100%;
+      background:#fff;
+    }
+    .card-food:hover{transform:translateY(-4px)}
+    .card-food .thumb{
+      aspect-ratio:16/10;
+      object-fit:cover;
+      width:100%;
+    }
+    .card-food .badge{
+      position:absolute;
+      top:.75rem;
+      left:.75rem;
+      background:#fff;
+      color:var(--brand-dark);
+      border-radius:999px;
+      font-weight:700;
+      padding:.35rem .6rem;
+      box-shadow:0 6px 20px rgba(0,0,0,.08);
+      font-size:.85rem;
+    }
+
+    .rating{
+      display:flex;
+      align-items:center;
+      gap:.4rem;
+      font-weight:700;
+      color:#1f7a1f;
+    }
+    .price{
+      font-weight:800;
+      color:#111;
+    }
+    .muted{color:var(--muted); font-size:.95rem}
+
+    .bottom-nav{
+      position:fixed;
+      bottom:0;
+      left:0;
+      right:0;
+      background:#fff;
+      border-top:1px solid #eee;
+      display:flex;
+      z-index:1030;
+    }
+    .bottom-nav .nav-item{flex:1; text-align:center}
+    .bottom-nav a{
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      gap:.2rem;
+      padding:.6rem 0 .5rem;
+      color:#666;
+      font-size:.9rem;
+      text-decoration:none;
+      transition:color .2s ease, transform .1s ease;
+    }
+    .bottom-nav a i{font-size:1.25rem}
+    .bottom-nav a.active, .bottom-nav a:hover{color:var(--brand-dark)}
+    @media (min-width:992px){ .bottom-nav{display:none} }
+  </style>
 </head>
 
 <body>
-  <!-- Navbar -->
   <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
     <div class="container">
       <a class="navbar-brand" href="{% url 'home' %}">Food Ordering</a>
@@ -41,7 +220,6 @@
     </div>
   </nav>
 
-  <!-- Hero Section -->
   <section class="hero text-center">
     <div class="container">
       <div class="d-inline-flex align-items-center gap-2">
@@ -68,7 +246,6 @@
     </div>
   </section>
 
-  <!-- Featured Restaurants -->
   <div class="container section">
     <h3 class="fw-bold mb-3">Featured Restaurants</h3>
     <div class="row g-4">
@@ -100,7 +277,6 @@
     </div>
   </div>
 
-  <!-- Popular Items -->
   <div class="container section">
     <h3 class="fw-bold mb-3">Popular Near You</h3>
     <div class="row g-4">
@@ -129,13 +305,11 @@
     </div>
   </div>
 
-  <!-- Extra Content Block -->
   <div class="container my-4">
     {% block content %}{% endblock %}
   </div>
 
   {% if user.is_authenticated %}
-  <!-- Bottom Navigation -->
   <nav class="bottom-nav">
     <div class="nav-item">
       <a href="{% url 'home' %}" class="{% if request.resolver_match.url_name == 'home' %}active{% endif %}">
@@ -158,8 +332,6 @@
   </nav>
   {% endif %}
 
-  <!-- Scripts -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="{% static 'js/main.js' %}"></script>
 </body>
 </html>
