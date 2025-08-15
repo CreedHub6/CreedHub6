@@ -1,33 +1,73 @@
 {% extends 'systemapp/base.html' %}
-{% load static %}
 
 {% block content %}
-<div class="container mt-5">
-    <h1 class="text-center text-primary mb-4">Explore Top Restaurants</h1>
-    <div class="row">
-        {% for restaurant in restaurants %}
-        <div class="col-md-4 col-sm-6 mb-4">
-            <div class="card shadow-sm rounded">
-                {% if restaurant.image %}
-                    <!-- Display image from Cloudinary -->
-                    <img src="{{ restaurant.image.url }}" class="card-img-top" alt="{{ restaurant.name }}">
-                {% else %}
-                    <!-- Fallback image -->
-                    <img src="{% static 'images/default-restaurant.jpg' %}" class="card-img-top" alt="No image available">
-                {% endif %}
-                <div class="card-body">
-                    <h5 class="card-title">{{ restaurant.name }}</h5>
-                    <p class="card-text text-muted">{{ restaurant.address|truncatechars:60 }}</p>
-                    <p class="mb-1"><strong>Phone:</strong> {{ restaurant.phone }}</p>
-                    <a href="{% url 'restaurant_detail' restaurant.id %}" class="btn btn-primary btn-sm">View Details</a>
+<section class="bg-primary-gradient text-white py-5 shadow-sm">
+    <div class="container text-center">
+        <h1 class="fw-bold display-5">Explore Top Restaurants</h1>
+        <p class="lead opacity-75">Discover the best cuisines, crafted just for you</p>
+    </div>
+</section>
+
+<section class="py-5">
+    <div class="container">
+        <div class="row g-4">
+            {% for restaurant in restaurants %}
+            <div class="col-lg-4 col-md-6">
+                <div class="card h-100 border-0 shadow-lg rounded-4 overflow-hidden transition-all hover-scale">
+                    <div class="position-relative">
+                        {% if restaurant.image %}
+                            <img src="{{ restaurant.image.url }}" 
+                                 class="card-img-top" 
+                                 alt="{{ restaurant.name }}"
+                                 style="height: 220px; object-fit: cover;">
+                        {% else %}
+                            <img src="{{ MEDIA_URL }}menu_items/example.jpg" 
+                                 class="card-img-top" 
+                                 alt="Default Image"
+                                 style="height: 220px; object-fit: cover;">
+                        {% endif %}
+                        <span class="badge bg-warning text-dark position-absolute top-0 start-0 m-3 px-3 py-2 rounded-pill shadow-sm">
+                            Featured
+                        </span>
+                    </div>
+                    <div class="card-body text-center d-flex flex-column">
+                        <h5 class="fw-bold mb-2">{{ restaurant.name }}</h5>
+                        <p class="text-muted small flex-grow-1">{{ restaurant.address }}</p>
+                        <a href="{% url 'restaurant_detail' restaurant.id %}" 
+                           class="btn btn-primary-gradient rounded-pill fw-semibold py-2 px-4 mt-auto">
+                            <i class="fas fa-book-open me-2"></i> View Menu
+                        </a>
+                    </div>
                 </div>
             </div>
+            {% empty %}
+            <div class="col-12 text-center py-5">
+                <i class="fas fa-store fa-4x text-muted mb-3"></i>
+                <h3 class="text-muted">No restaurants found</h3>
+                <p class="text-muted">We’re adding more locations soon — stay tuned!</p>
+            </div>
+            {% endfor %}
         </div>
-        {% empty %}
-        <div class="col-12">
-            <p class="text-center text-muted">No restaurants available at the moment.</p>
-        </div>
-        {% endfor %}
     </div>
-</div>
+</section>
+
+<style>
+/* Smooth hover zoom */
+.hover-scale:hover {
+    transform: translateY(-5px) scale(1.02);
+    transition: all 0.3s ease-in-out;
+}
+.btn-primary-gradient {
+    background: linear-gradient(45deg, #007bff, #00d4ff);
+    border: none;
+    color: white;
+}
+.btn-primary-gradient:hover {
+    opacity: 0.9;
+    color: white;
+}
+.bg-primary-gradient {
+    background: linear-gradient(45deg, #007bff, #00d4ff);
+}
+</style>
 {% endblock %}
