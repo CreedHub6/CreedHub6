@@ -14,138 +14,27 @@
   <!-- Font Awesome -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
 
-  <style>
-    body {
-      font-family: 'Poppins', sans-serif;
-      padding-top: 70px;
-      padding-bottom: 70px;
-      background-color: #fdfdfd;
-      color: #333;
-    }
-
-    /* Navbar */
-    .navbar {
-      background: linear-gradient(90deg, #ff7f50, #ff9900);
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-      transition: background 0.3s ease;
-    }
-
-    .navbar-brand {
-      font-size: 1.6rem;
-      font-weight: bold;
-      color: #fff;
-    }
-
-    .navbar-nav .nav-link {
-      font-weight: 500;
-      color: #fff;
-      transition: color 0.3s ease;
-    }
-
-    .navbar-nav .nav-link:hover {
-      color: #000;
-    }
-
-    /* Bottom Navigation */
-    .bottom-nav {
-      position: fixed;
-      bottom: 0;
-      width: 100%;
-      background-color: #fff;
-      border-top: 1px solid #ddd;
-      z-index: 1030;
-    }
-
-    .bottom-nav .nav-item {
-      flex: 1;
-      text-align: center;
-    }
-
-    .bottom-nav a {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 8px 0;
-      color: #666;
-      font-size: 0.85rem;
-      transition: all 0.3s ease;
-    }
-
-    .bottom-nav a i {
-      font-size: 1.4rem;
-      margin-bottom: 2px;
-    }
-
-    .bottom-nav a:hover, 
-    .bottom-nav a.active {
-      color: #ff6600;
-    }
-
-    /* Hero section */
-    .hero {
-      text-align: center;
-      padding: 3rem 1rem;
-      background: linear-gradient(180deg, #fff7e6, #ffffff);
-    }
-
-    .hero h1 {
-      font-weight: 700;
-      font-size: 2.5rem;
-      color: #ff6600;
-      margin-bottom: 1rem;
-    }
-
-    .hero p {
-      font-size: 1.1rem;
-      color: #666;
-      margin-bottom: 1.5rem;
-    }
-
-    /* Buttons */
-    .btn-custom {
-      background-color: #ff6600;
-      color: #fff;
-      border-radius: 30px;
-      padding: 10px 25px;
-      font-weight: 500;
-      transition: all 0.3s ease;
-    }
-
-    .btn-custom:hover {
-      background-color: #e05500;
-      transform: translateY(-2px);
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    }
-
-    /* Responsive tweaks */
-    @media (max-width: 576px) {
-      .hero h1 {
-        font-size: 2rem;
-      }
-      .hero p {
-        font-size: 1rem;
-      }
-    }
-  </style>
+  <!-- Custom Styles -->
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
-<body>
 
+<body>
   <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg fixed-top">
+  <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
     <div class="container">
       <a class="navbar-brand" href="{% url 'home' %}">Food Ordering</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-
       <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ms-auto">
-          <li class="nav-item"><a class="nav-link" href="{% url 'restaurant_list' %}">Restaurants</a></li>
+        <ul class="navbar-nav ms-auto align-items-lg-center">
+          <li class="nav-item"><a class="nav-link {% if request.resolver_match.url_name == 'restaurant_list' %}active{% endif %}" href="{% url 'restaurant_list' %}">Restaurants</a></li>
           {% if user.is_authenticated %}
-            <li class="nav-item"><a class="nav-link" href="{% url 'user_logout' %}"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+            <li class="nav-item d-none d-lg-block mx-2"><a class="btn btn-light btn-sm rounded-pill px-3 fw-semibold" href="{% url 'view_cart' %}"><i class="fa-solid fa-cart-shopping me-1"></i>Cart</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'user_logout' %}"><i class="fas fa-sign-out-alt me-1"></i>Logout</a></li>
           {% else %}
-            <li class="nav-item"><a class="nav-link" href="{% url 'user_login' %}"><i class="fas fa-sign-in-alt"></i> Login</a></li>
-            <li class="nav-item"><a class="nav-link" href="{% url 'user_signup' %}"><i class="fas fa-user-plus"></i> Sign Up</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'user_login' %}"><i class="fas fa-sign-in-alt me-1"></i>Login</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'user_signup' %}"><i class="fas fa-user-plus me-1"></i>Sign Up</a></li>
           {% endif %}
         </ul>
       </div>
@@ -153,43 +42,124 @@
   </nav>
 
   <!-- Hero Section -->
-  <section class="hero">
+  <section class="hero text-center">
     <div class="container">
-      <h1>Order Your Favorite Food Online</h1>
-      <p>Delicious meals from the best restaurants delivered straight to your door.</p>
-      <a href="{% url 'restaurant_list' %}" class="btn btn-custom">Start Ordering</a>
+      <div class="d-inline-flex align-items-center gap-2">
+        <span class="badge"><i class="fa-solid fa-bolt me-1"></i>Fast • Fresh • Local</span>
+      </div>
+      <h1 class="hero-title">Order Your Favorite Food Online</h1>
+      <p class="hero-sub">Delicious meals from the best restaurants delivered to your door. Track orders in real-time and enjoy exclusive deals.</p>
+      <form action="{% url 'restaurant_list' %}" method="get" class="search-wrap">
+        <i class="fa-solid fa-magnifying-glass px-3"></i>
+        <input type="text" name="q" placeholder="Search restaurants, meals, or cuisines" value="{{ request.GET.q|default:'' }}">
+        <button class="btn btn-primary-brand" type="submit">Search</button>
+      </form>
+      <div class="mt-3 chip-scroll">
+        <a href="{% url 'restaurant_list' %}?cuisine=Pizza" class="chip"><i class="fa-solid fa-pizza-slice me-1"></i>Pizza</a>
+        <a href="{% url 'restaurant_list' %}?cuisine=Burger" class="chip"><i class="fa-solid fa-burger me-1"></i>Burgers</a>
+        <a href="{% url 'restaurant_list' %}?cuisine=African" class="chip"><i class="fa-solid fa-drumstick-bite me-1"></i>African</a>
+        <a href="{% url 'restaurant_list' %}?cuisine=Chinese" class="chip"><i class="fa-solid fa-bowl-food me-1"></i>Chinese</a>
+        <a href="{% url 'restaurant_list' %}?cuisine=Breakfast" class="chip"><i class="fa-solid fa-mug-saucer me-1"></i>Breakfast</a>
+        <a href="{% url 'restaurant_list' %}?cuisine=Healthy" class="chip"><i class="fa-solid fa-leaf me-1"></i>Healthy</a>
+      </div>
+      <div class="mt-4">
+        <a href="{% url 'restaurant_list' %}" class="btn btn-primary-brand px-4">Start Ordering</a>
+      </div>
     </div>
   </section>
 
-  <!-- Main Content -->
+  <!-- Featured Restaurants -->
+  <div class="container section">
+    <h3 class="fw-bold mb-3">Featured Restaurants</h3>
+    <div class="row g-4">
+      {% for r in featured_restaurants %}
+      <div class="col-12 col-sm-6 col-lg-4">
+        <a href="{% url 'restaurant_detail' r.id %}" class="text-decoration-none">
+          <div class="card-food position-relative">
+            <img src="{{ r.cover_url|default:'/static/img/placeholder-restaurant.jpg' }}" alt="{{ r.name }}" class="thumb">
+            <span class="badge"><i class="fa-solid fa-clock me-1"></i>{{ r.eta|default:'25–35 min' }}</span>
+            <div class="p-3">
+              <div class="d-flex justify-content-between align-items-center">
+                <h5 class="mb-1 text-dark">{{ r.name }}</h5>
+                <div class="rating"><i class="fa-solid fa-star"></i> <span>{{ r.rating|default:'4.6' }}</span></div>
+              </div>
+              <div class="muted">{{ r.cuisines|default:'Mixed Cuisines' }}</div>
+              <div class="d-flex justify-content-between align-items-center mt-2">
+                <div class="muted"><i class="fa-solid fa-location-dot me-1"></i>{{ r.address|truncatechars:26 }}</div>
+                <div class="price">{{ r.min_order|default:'₦0' }}</div>
+              </div>
+            </div>
+          </div>
+        </a>
+      </div>
+      {% empty %}
+      <div class="col-12">
+        <div class="alert alert-light border">No featured restaurants yet.</div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <!-- Popular Items -->
+  <div class="container section">
+    <h3 class="fw-bold mb-3">Popular Near You</h3>
+    <div class="row g-4">
+      {% for m in popular_items %}
+      <div class="col-12 col-sm-6 col-lg-4">
+        <div class="card-food h-100">
+          <img src="{{ m.image_url|default:'/static/img/placeholder-food.jpg' }}" alt="{{ m.name }}" class="thumb">
+          <div class="p-3">
+            <h5 class="mb-1 text-dark">{{ m.name }}</h5>
+            <div class="muted mb-2">{{ m.restaurant.name }}</div>
+            <div class="d-flex justify-content-between align-items-center">
+              <div class="rating"><i class="fa-solid fa-star"></i> <span>{{ m.rating|default:'4.7' }}</span></div>
+              <div class="price">{{ m.price_display|default:'₦—' }}</div>
+            </div>
+            <div class="mt-3">
+              <a href="{% url 'add_to_cart' m.id %}" class="btn btn-primary-brand w-100">Add to Cart</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% empty %}
+      <div class="col-12">
+        <div class="alert alert-light border">No popular items yet.</div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <!-- Extra Content Block -->
   <div class="container my-4">
     {% block content %}{% endblock %}
   </div>
 
   {% if user.is_authenticated %}
   <!-- Bottom Navigation -->
-  <nav class="bottom-nav d-flex">
+  <nav class="bottom-nav">
     <div class="nav-item">
       <a href="{% url 'home' %}" class="{% if request.resolver_match.url_name == 'home' %}active{% endif %}">
         <i class="fas fa-home"></i>
-        Home
+        <span>Home</span>
       </a>
     </div>
     <div class="nav-item">
       <a href="{% url 'view_cart' %}" class="{% if request.resolver_match.url_name == 'view_cart' %}active{% endif %}">
         <i class="fas fa-shopping-cart"></i>
-        Cart
+        <span>Cart</span>
       </a>
     </div>
     <div class="nav-item">
       <a href="{% url 'profile' %}" class="{% if request.resolver_match.url_name == 'profile' %}active{% endif %}">
         <i class="fas fa-user"></i>
-        Profile
+        <span>Profile</span>
       </a>
     </div>
   </nav>
   {% endif %}
 
+  <!-- Scripts -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="{% static 'js/main.js' %}"></script>
 </body>
 </html>
