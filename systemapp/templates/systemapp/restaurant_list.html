@@ -1,4 +1,6 @@
 {% extends 'systemapp/base.html' %}
+{% load static %}
+{% load cloudinary %}
 
 {% block content %}
 <div class="container mt-5">
@@ -7,17 +9,24 @@
         {% for restaurant in restaurants %}
         <div class="col-md-4 col-sm-6 mb-4">
             <div class="card shadow-sm rounded">
-                <img src="{{  MEDIA_URL  }}/media/menu_items/1000066235.jpg " class="card-img-top" alt="{{ restaurant.name }}">
+                {% if restaurant.image %}
+                    <!-- Display image from Cloudinary -->
+                    <img src="{{ restaurant.image.url }}" class="card-img-top" alt="{{ restaurant.name }}">
+                {% else %}
+                    <!-- Fallback image -->
+                    <img src="{% static 'images/default-restaurant.jpg' %}" class="card-img-top" alt="No image available">
+                {% endif %}
                 <div class="card-body">
-                    <h5 class="card-title text-center">{{ restaurant.name }}</h5>
-                    <p class="card-text text-center">
-                        <small class="text-muted">Delicious cuisines, perfect for your taste buds!</small>
-                    </p>
-                    <a href="{% url 'menu' restaurant.id %}" class="btn btn-primary w-100">
-                        View Menu
-                    </a>
+                    <h5 class="card-title">{{ restaurant.name }}</h5>
+                    <p class="card-text text-muted">{{ restaurant.address|truncatechars:60 }}</p>
+                    <p class="mb-1"><strong>Phone:</strong> {{ restaurant.phone }}</p>
+                    <a href="{% url 'restaurant_detail' restaurant.id %}" class="btn btn-primary btn-sm">View Details</a>
                 </div>
             </div>
+        </div>
+        {% empty %}
+        <div class="col-12">
+            <p class="text-center text-muted">No restaurants available at the moment.</p>
         </div>
         {% endfor %}
     </div>
