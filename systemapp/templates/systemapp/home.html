@@ -12,27 +12,24 @@
     }
 
     /* Hero Section */
-    
-
     .hero {
-    position: relative;
-    background: url("https://source.unsplash.com/1600x900/?fastfood,restaurant,burger,pizza") center/cover no-repeat;
-    color: white;
-    padding: 120px 20px;
-    text-align: center;
-}
-
-.hero::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: rgba(0,0,0,0.5); /* dark overlay for readability */
-}
-
-.hero * {
-    position: relative;
-    z-index: 1;
-}
+        position: relative;
+        background: url("https://source.unsplash.com/random/1600x900/?fastfood,restaurant,burger,pizza") center/cover no-repeat;
+        color: white;
+        padding: 120px 20px;
+        text-align: center;
+        min-height: 100vh;
+    }
+    .hero::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: rgba(0,0,0,0.55);
+    }
+    .hero .content {
+        position: relative;
+        z-index: 2;
+    }
     .hero h1 {
         font-size: 3rem;
         font-weight: 800;
