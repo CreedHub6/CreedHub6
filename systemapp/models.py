@@ -18,7 +18,7 @@ class MenuItem(models.Model):
     name = models.CharField(max_length=100)
     description = models.TextField()
     price = models.DecimalField(max_digits=10, decimal_places=2)
-    image = CloudinaryField('menu_items', blank=True, null=True)
+    image = CloudinaryField('images', default='null')
 
     def __str__(self):
         return self.name
