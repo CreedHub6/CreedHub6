@@ -412,54 +412,64 @@
     </div>
 </section>
 
+
 <!-- Menu -->
 <section class="py-5">
     <div class="container">
         <h2 class="text-center fw-bold mb-5 section-title" data-aos="fade-down">Customer Favorites</h2>
-        <div class="row g-4">
-            <!-- Burger -->
-            <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
-                <div class="card menu-card h-100 shadow-sm">
-                    <img src="{{ burger.image.url|default:'https://source.unsplash.com/400x300/?burger' }}" class="card-img-top" alt="Burger">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ burger.name|default:"Classic Burger Combo" }}</h5>
-                        <p class="card-text">{{ burger.description|default:"Juicy beef patty with crisp veggies & signature sauce." }}</p>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <span class="text-muted">{{ burger.calories|default:550 }} kcal</span>
-                            <span class="fw-bold text-danger">${{ burger.price|default:"8.99" }}</span>
+
+        <!-- Menu Items Grid - Displaying only 3 items -->
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-4">
+            {% for item in menu_items|slice:":3" %}
+            <div class="col" data-aos="fade-up" data-aos-delay="{{ forloop.counter|add:'0' }}00">
+                <div class="card h-100 shadow-sm border-0 rounded-4 overflow-hidden menu-card">
+                    <!-- Product Image -->
+                    {% if item.image %}
+                        <img src="{{ item.image.url }}"
+                             class="card-img-top img-fluid"
+                             alt="{{ item.name }}"
+                             style="object-fit: cover; height: 220px;">
+                    {% else %}
+                        <img src="https://source.unsplash.com/400x300/?food,{{ item.name|slugify }}"
+                             class="card-img-top img-fluid"
+                             alt="{{ item.name }}"
+                             style="object-fit: cover; height: 220px;">
+                    {% endif %}
+
+                    <!-- Product Info -->
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title fw-bold">{{ item.name }}</h5>
+                        <p class="card-text text-muted flex-grow-1">
+                            {{ item.description|truncatewords:15 }}
+                        </p>
+
+                        <!-- Calories & Price -->
+                        <div class="d-flex justify-content-between align-items-center mt-2">
+                            {% if item.calories %}
+                                <span class="text-muted small">{{ item.calories }} kcal</span>
+                            {% else %}
+                                <span class="text-muted small">Nutrition info available</span>
+                            {% endif %}
+                            <span class="fw-bold text-danger">${{ item.price }}</span>
+                        </div>
+
+                        <!-- Add to Cart Button -->
+                        <div class="d-grid mt-3">
+                            <a href="{% url 'add_to_cart' item.id %}" class="btn btn-primary">
+                                <i class="fas fa-cart-plus me-2"></i>Add to Cart
+                            </a>
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- Chicken -->
-            <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
-                <div class="card menu-card h-100 shadow-sm">
-                    <img src="{{ chicken.image.url|default:'https://source.unsplash.com/400x300/?fried-chicken' }}" class="card-img-top" alt="Chicken">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ chicken.name|default:"Crispy Chicken Basket" }}</h5>
-                        <p class="card-text">{{ chicken.description|default:"Golden fried chicken with sides & sauces." }}</p>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <span class="text-muted">{{ chicken.calories|default:480 }} kcal</span>
-                            <span class="fw-bold text-danger">${{ chicken.price|default:"7.99" }}</span>
-                        </div>
-                    </div>
-                </div>
+            {% empty %}
+            <!-- Fallback content if no menu items available -->
+            <div class="col-12 text-center">
+                <p class="text-muted">No menu items available at the moment.</p>
             </div>
-            <!-- Salad -->
-            <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
-                <div class="card menu-card h-100 shadow-sm">
-                    <img src="{{ salad.image.url|default:'https://source.unsplash.com/400x300/?salad' }}" class="card-img-top" alt="Salad">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ salad.name|default:"Garden Fresh Salad" }}</h5>
-                        <p class="card-text">{{ salad.description|default:"Crisp greens, cherry tomatoes, cucumbers, and dressing." }}</p>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <span class="text-muted">{{ salad.calories|default:220 }} kcal</span>
-                            <span class="fw-bold text-danger">${{ salad.price|default:"6.49" }}</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            {% endfor %}
         </div>
+
         <div class="text-center mt-5" data-aos="fade-up" data-aos-delay="400">
             <a href="#" class="btn btn-primary btn-lg px-5 shadow floating">View Full Menu</a>
         </div>
