@@ -5,118 +5,404 @@
 
 <!-- AOS CSS -->
 <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+<!-- Animate.css -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+<!-- Splide Carousel -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css">
 
 <style>
+    :root {
+        --primary: #ff4757;
+        --secondary: #2ed573;
+        --accent: #ffa502;
+        --dark: #2f3542;
+        --light: #f1f2f6;
+        --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    
     body {
         font-family: 'Poppins', sans-serif;
+        overflow-x: hidden;
+    }
+
+    /* Custom Cursor */
+    .cursor-dot {
+        width: 8px;
+        height: 8px;
+        background-color: var(--primary);
+        border-radius: 50%;
+        position: fixed;
+        pointer-events: none;
+        z-index: 9999;
+        transform: translate(-50%, -50%);
+        transition: transform 0.1s;
+    }
+    
+    .cursor-outline {
+        width: 40px;
+        height: 40px;
+        border: 2px solid var(--primary);
+        border-radius: 50%;
+        position: fixed;
+        pointer-events: none;
+        z-index: 9998;
+        transform: translate(-50%, -50%);
+        transition: all 0.2s ease-out;
     }
 
     /* Hero Section */
     .hero {
         position: relative;
-        background: url("{% static 'images/afang.jpg' %}") center/cover no-repeat;
+        background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url("{% static 'images/afang.jpg' %}") center/cover no-repeat;
         color: white;
-        padding: 120px 20px;
+        padding: 150px 20px;
         text-align: center;
+        overflow: hidden;
     }
-    .hero::after {
+    
+    .hero::before {
         content: "";
         position: absolute;
-        inset: 0;
-        background: rgba(0,0,0,0.55);
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(circle at 50% 50%, transparent 30%, rgba(0,0,0,0.8) 100%);
+        z-index: 1;
     }
+    
     .hero .content {
         position: relative;
         z-index: 2;
     }
+    
     .hero h1 {
-        font-size: 3rem;
+        font-size: 3.5rem;
         font-weight: 800;
+        margin-bottom: 1.5rem;
+        text-shadow: 2px 2px 10px rgba(0,0,0,0.3);
     }
+    
     .hero p {
         font-size: 1.2rem;
         max-width: 650px;
-        margin: 20px auto;
+        margin: 0 auto 2.5rem;
+        opacity: 0.9;
+    }
+    
+    .btn-primary {
+        background: var(--primary);
+        border: none;
+        padding: 12px 30px;
+        border-radius: 50px;
+        font-weight: 600;
+        transition: var(--transition);
+        box-shadow: 0 4px 15px rgba(255, 71, 87, 0.3);
+    }
+    
+    .btn-primary:hover {
+        background: #ff2e43;
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(255, 71, 87, 0.4);
+    }
+    
+    .btn-outline-light {
+        border: 2px solid white;
+        padding: 10px 28px;
+        border-radius: 50px;
+        font-weight: 600;
+        transition: var(--transition);
+    }
+    
+    .btn-outline-light:hover {
+        background: white;
+        color: var(--dark);
+        transform: translateY(-3px);
     }
 
     /* Highlights */
     .highlight-card {
         text-align: center;
-        padding: 30px;
-        border-radius: 15px;
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        padding: 40px 30px;
+        border-radius: 20px;
+        transition: var(--transition);
+        position: relative;
+        overflow: hidden;
+        background: white;
+        z-index: 1;
     }
+    
+    .highlight-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 0;
+        background: linear-gradient(135deg, var(--primary), var(--accent));
+        transition: height 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        z-index: -1;
+        opacity: 0.9;
+    }
+    
     .highlight-card:hover {
-        transform: translateY(-8px);
-        box-shadow: 0 15px 25px rgba(0,0,0,0.1);
+        transform: translateY(-10px);
+        box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        color: white;
     }
+    
+    .highlight-card:hover::before {
+        height: 100%;
+    }
+    
+    .highlight-card:hover .highlight-icon {
+        color: white;
+        transform: scale(1.2) rotate(10deg);
+    }
+    
     .highlight-icon {
-        font-size: 2.5rem;
+        font-size: 3rem;
+        margin-bottom: 20px;
+        transition: var(--transition);
+        display: inline-block;
+    }
+    
+    .highlight-card h5 {
+        font-weight: 700;
         margin-bottom: 15px;
+        transition: var(--transition);
+    }
+    
+    .highlight-card p {
+        transition: var(--transition);
     }
 
     /* Menu Cards */
     .menu-card {
-        border-radius: 15px;
+        border-radius: 20px;
         overflow: hidden;
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        transition: var(--transition);
+        border: none;
+        position: relative;
     }
+    
+    .menu-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 50%);
+        opacity: 0;
+        transition: var(--transition);
+        z-index: 1;
+    }
+    
     .menu-card:hover {
-        transform: scale(1.03);
-        box-shadow: 0px 15px 30px rgba(0,0,0,0.15);
+        transform: translateY(-10px) scale(1.03);
+        box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+    }
+    
+    .menu-card:hover::before {
+        opacity: 1;
+    }
+    
+    .menu-card .card-img-top {
+        transition: var(--transition);
+        height: 250px;
+        object-fit: cover;
+    }
+    
+    .menu-card:hover .card-img-top {
+        transform: scale(1.1);
+    }
+    
+    .card-body {
+        position: relative;
+        z-index: 2;
+    }
+    
+    .card-title {
+        font-weight: 700;
+        color: var(--dark);
+        transition: var(--transition);
+    }
+    
+    .menu-card:hover .card-title {
+        color: white;
+    }
+    
+    .menu-card:hover .card-text,
+    .menu-card:hover .text-muted {
+        color: rgba(255,255,255,0.9) !important;
     }
 
-    /* CTA */
+    /* CTA Section */
     .cta-section {
-        background: linear-gradient(135deg, #ff6b6b, #f06595);
+        background: linear-gradient(135deg, var(--primary), var(--accent));
         color: white;
         text-align: center;
-        padding: 80px 20px;
+        padding: 100px 20px;
         border-radius: 20px;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .cta-section::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%);
+        transform: rotate(30deg);
+        animation: shine 8s infinite linear;
+    }
+    
+    @keyframes shine {
+        0% {
+            transform: translateX(-100%) rotate(30deg);
+        }
+        100% {
+            transform: translateX(100%) rotate(30deg);
+        }
+    }
+    
+    .cta-section h2 {
+        font-weight: 800;
+        margin-bottom: 1.5rem;
+        text-shadow: 2px 2px 5px rgba(0,0,0,0.2);
+    }
+    
+    .cta-section .lead {
+        margin-bottom: 2.5rem;
+        opacity: 0.9;
+    }
+    
+    .cta-section .btn-light {
+        border-radius: 50px;
+        padding: 12px 35px;
+        font-weight: 600;
+        transition: var(--transition);
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+    
+    .cta-section .btn-light:hover {
+        transform: translateY(-3px) scale(1.05);
+        box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    }
+
+    /* Particle Background */
+    .particles-js {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        z-index: 0;
+    }
+
+    /* Section Titles */
+    .section-title {
+        position: relative;
+        display: inline-block;
+        margin-bottom: 3rem;
+        font-weight: 800;
+    }
+    
+    .section-title::after {
+        content: '';
+        position: absolute;
+        bottom: -15px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 80px;
+        height: 4px;
+        background: linear-gradient(to right, var(--primary), var(--accent));
+        border-radius: 2px;
+    }
+
+    /* Floating Animation */
+    @keyframes float {
+        0% {
+            transform: translateY(0px);
+        }
+        50% {
+            transform: translateY(-15px);
+        }
+        100% {
+            transform: translateY(0px);
+        }
+    }
+    
+    .floating {
+        animation: float 5s ease-in-out infinite;
     }
 
     /* Responsive tweaks */
     @media (max-width: 768px) {
-        .hero h1 {
-            font-size: 2.2rem;
+        .hero {
+            padding: 100px 20px;
         }
+        
+        .hero h1 {
+            font-size: 2.5rem;
+        }
+        
         .hero p {
             font-size: 1rem;
+        }
+        
+        .highlight-card {
+            margin-bottom: 20px;
+        }
+        
+        .cursor-dot, .cursor-outline {
+            display: none;
         }
     }
 </style>
 
+<!-- Custom Cursor -->
+<div class="cursor-dot"></div>
+<div class="cursor-outline"></div>
+
 <!-- Hero -->
 <section class="hero">
+    <div id="particles-js" class="particles-js"></div>
     <div class="content" data-aos="fade-up" data-aos-duration="1200">
-        <h1>Delicious Fast Food, Redefined</h1>
-        <p>Fresh ingredients, bold flavors, and meals that fit your lifestyle. Experience the future of fast food today.</p>
-        <a href="{% url 'restaurant_list' %}" class="btn btn-primary btn-lg shadow me-3">Order Now</a>
-        <a href="#highlights" class="btn btn-outline-light btn-lg shadow">Explore</a>
+        <h1 class="animate__animated animate__fadeInDown">Delicious Fast Food, <span class="text-warning">Redefined</span></h1>
+        <p class="animate__animated animate__fadeIn animate__delay-1s">Fresh ingredients, bold flavors, and meals that fit your lifestyle. Experience the future of fast food today.</p>
+        <div class="animate__animated animate__fadeInUp animate__delay-2s">
+            <a href="{% url 'restaurant_list' %}" class="btn btn-primary btn-lg shadow me-3 floating">Order Now</a>
+            <a href="#highlights" class="btn btn-outline-light btn-lg shadow ms-2">Explore</a>
+        </div>
     </div>
 </section>
 
 <!-- Highlights -->
 <section id="highlights" class="py-5 bg-light">
     <div class="container">
-        <h2 class="text-center fw-bold mb-5" data-aos="fade-down">Why Choose Us?</h2>
+        <h2 class="text-center fw-bold mb-5 section-title" data-aos="fade-down">Why Choose Us?</h2>
         <div class="row g-4">
             <div class="col-md-4" data-aos="zoom-in" data-aos-delay="100">
-                <div class="highlight-card bg-white shadow-sm">
+                <div class="highlight-card shadow-sm">
                     <i class="fas fa-leaf highlight-icon text-success"></i>
                     <h5>Fresh Ingredients</h5>
                     <p>Locally sourced produce and premium quality meat for a healthier, tastier experience.</p>
                 </div>
             </div>
             <div class="col-md-4" data-aos="zoom-in" data-aos-delay="200">
-                <div class="highlight-card bg-white shadow-sm">
+                <div class="highlight-card shadow-sm">
                     <i class="fas fa-bolt highlight-icon text-warning"></i>
                     <h5>Quick Service</h5>
                     <p>Fast preparation and doorstep delivery without compromising on quality.</p>
                 </div>
             </div>
             <div class="col-md-4" data-aos="zoom-in" data-aos-delay="300">
-                <div class="highlight-card bg-white shadow-sm">
+                <div class="highlight-card shadow-sm">
                     <i class="fas fa-heart highlight-icon text-danger"></i>
                     <h5>Healthier Choices</h5>
                     <p>Wide variety including vegan, gluten-free, and low-calorie options for everyone.</p>
@@ -129,7 +415,7 @@
 <!-- Menu -->
 <section class="py-5">
     <div class="container">
-        <h2 class="text-center fw-bold mb-5" data-aos="fade-down">Customer Favorites</h2>
+        <h2 class="text-center fw-bold mb-5 section-title" data-aos="fade-down">Customer Favorites</h2>
         <div class="row g-4">
             <!-- Burger -->
             <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
@@ -175,22 +461,110 @@
             </div>
         </div>
         <div class="text-center mt-5" data-aos="fade-up" data-aos-delay="400">
-            <a href="#" class="btn btn-primary btn-lg px-5 shadow">View Full Menu</a>
+            <a href="#" class="btn btn-primary btn-lg px-5 shadow floating">View Full Menu</a>
         </div>
     </div>
 </section>
 
 <!-- CTA -->
 <section class="cta-section my-5" data-aos="zoom-in" data-aos-duration="1200">
-    <h2 class="fw-bold">Ready to Taste the Difference?</h2>
-    <p class="lead mb-4">Order now and enjoy fresh, delicious meals delivered right to your door.</p>
-    <a href="{% url 'restaurant_list' %}" class="btn btn-light btn-lg shadow">Get Started</a>
+    <div class="container">
+        <h2 class="fw-bold">Ready to Taste the Difference?</h2>
+        <p class="lead mb-4">Order now and enjoy fresh, delicious meals delivered right to your door.</p>
+        <a href="{% url 'restaurant_list' %}" class="btn btn-light btn-lg shadow floating">Get Started</a>
+    </div>
 </section>
 
 <!-- AOS JS -->
 <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+<!-- Particles.js -->
+<script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+<!-- Splide Carousel -->
+<script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js"></script>
+
 <script>
-  AOS.init();
+  // Initialize AOS
+  AOS.init({
+    duration: 1000,
+    once: true,
+    easing: 'ease-out-back'
+  });
+
+  // Custom cursor
+  const cursorDot = document.querySelector('.cursor-dot');
+  const cursorOutline = document.querySelector('.cursor-outline');
+  
+  document.addEventListener('mousemove', (e) => {
+    cursorDot.style.left = e.clientX + 'px';
+    cursorDot.style.top = e.clientY + 'px';
+    
+    cursorOutline.style.left = e.clientX + 'px';
+    cursorOutline.style.top = e.clientY + 'px';
+  });
+  
+  // Interactive cursor effects
+  document.querySelectorAll('a, button, .menu-card, .highlight-card').forEach(item => {
+    item.addEventListener('mouseenter', () => {
+      cursorDot.style.transform = 'translate(-50%, -50%) scale(1.5)';
+      cursorOutline.style.transform = 'translate(-50%, -50%) scale(1.5)';
+      cursorOutline.style.borderWidth = '1px';
+    });
+    
+    item.addEventListener('mouseleave', () => {
+      cursorDot.style.transform = 'translate(-50%, -50%) scale(1)';
+      cursorOutline.style.transform = 'translate(-50%, -50%) scale(1)';
+      cursorOutline.style.borderWidth = '2px';
+    });
+  });
+
+  // Initialize particles.js
+  particlesJS('particles-js', {
+    particles: {
+      number: { value: 80, density: { enable: true, value_area: 800 } },
+      color: { value: "#ffffff" },
+      shape: { type: "circle" },
+      opacity: { value: 0.5, random: true },
+      size: { value: 3, random: true },
+      line_linked: { enable: false },
+      move: { enable: true, speed: 1, direction: "none", random: true, straight: false, out_mode: "out" }
+    },
+    interactivity: {
+      detect_on: "canvas",
+      events: {
+        onhover: { enable: true, mode: "bubble" },
+        onclick: { enable: true, mode: "push" }
+      },
+      modes: {
+        bubble: { distance: 100, size: 5, duration: 2, opacity: 0.8, speed: 3 },
+        push: { particles_nb: 4 }
+      }
+    }
+  });
+
+  // Add scroll-triggered animations
+  window.addEventListener('scroll', () => {
+    const scrollPosition = window.scrollY;
+    
+    // Parallax effect for hero
+    document.querySelector('.hero').style.backgroundPositionY = `${scrollPosition * 0.5}px`;
+    
+    // Scale buttons on scroll
+    document.querySelectorAll('.floating').forEach(item => {
+      if (isInViewport(item)) {
+        item.classList.add('floating');
+      }
+    });
+  });
+  
+  function isInViewport(element) {
+    const rect = element.getBoundingClientRect();
+    return (
+      rect.top >= 0 &&
+      rect.left >= 0 &&
+      rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+      rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+    );
+  }
 </script>
 
 {% endblock %}
