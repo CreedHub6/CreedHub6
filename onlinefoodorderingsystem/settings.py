@@ -23,7 +23,7 @@ SECRET_KEY = env(
     default='django-insecure-$1dw+3=6$q6=(57l_a^!%8d9-+h^__w7+zvpwv$d_^ocz8x+cl'
 )
 DEBUG = False
-ALLOWED_HOSTS = ['nativekitchen.onrender.com']
+ALLOWED_HOSTS = ['creedhub6.onrender.com']
 
 # ---------------------------------------------------------------------
 # Installed apps
