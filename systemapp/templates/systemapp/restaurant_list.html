@@ -2,540 +2,68 @@
 
 {% block content %}
 
-<section class="page-header bg-african-pattern text-white py-5 position-relative overflow-hidden">
-    <div class="overlay-dark"></div>
-    <div class="container position-relative z-1">
-        <div class="row align-items-center">
-            <div class="col-lg-8">
-                <h1 class="display-4 fw-bold mb-3 animate-fade-in">Taste of Nigeria</h1>
-                <p class="lead mb-4 fs-5 animate-slide-up">Authentic Nigerian & Calabar cuisine crafted with traditional recipes and fresh ingredients</p>
-                <div class="d-flex flex-wrap gap-3 animate-slide-up">
-                    <div class="d-flex align-items-center bg-white bg-opacity-20 rounded-pill px-3 py-2">
-                        <i class="fas fa-star text-warning me-2"></i>
-                        <span class="fw-medium">4.9/5 Rating</span>
-                    </div>
-                    <div class="d-flex align-items-center bg-white bg-opacity-20 rounded-pill px-3 py-2">
-                        <i class="fas fa-pepper-hot me-2"></i>
-                        <span class="fw-medium">Spicy Options</span>
-                    </div>
-                    <div class="d-flex align-items-center bg-white bg-opacity-20 rounded-pill px-3 py-2">
-                        <i class="fas fa-leaf me-2"></i>
-                        <span class="fw-medium">Fresh Local Ingredients</span>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 text-lg-end mt-4 mt-lg-0">
-                <div class="position-relative">
-                    <div class="floating-element floating-1">
-                        <i class="fas fa-utensils fa-4x text-white-50"></i>
-                    </div>
-                    <div class="floating-element floating-2">
-                        <i class="fas fa-mortar-pestle fa-3x text-warning opacity-75"></i>
-                    </div>
-                    <div class="floating-element floating-3">
-                        <i class="fas fa-pepper-hot fa-2x text-danger opacity-75"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="wave-divider">
-        <svg viewBox="0 0 1200 120" preserveAspectRatio="none">
-            <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" class="shape-fill"></path>
-        </svg>
-    </div>
-</section>
-
-<section class="py-5 bg-light">
-    <div class="container">
-        <div class="row mb-5">
-            <div class="col-12">
-                <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center">
-                    <h2 class="fw-bold mb-3 mb-md-0">Our Specialties</h2>
-                    <div class="d-flex gap-2">
-                        <div class="dropdown">
-                            <button class="btn btn-african dropdown-toggle" type="button" id="sortDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="fas fa-sort me-2"></i>Filter Dishes
-                            </button>
-                            <ul class="dropdown-menu" aria-labelledby="sortDropdown">
-                                <li><a class="dropdown-item" href="#">All Dishes</a></li>
-                                <li><a class="dropdown-item" href="#">Nigerian Classics</a></li>
-                                <li><a class="dropdown-item" href="#">Calabar Specials</a></li>
-                                <li><a class="dropdown-item" href="#">Soups & Swallows</a></li>
-                                <li><a class="dropdown-item" href="#">Grills & Barbecue</a></li>
-                            </ul>
-                        </div>
-                        <button class="btn btn-outline-african" type="button">
-                            <i class="fas fa-fire me-2"></i>Spicy Level
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <div class="row g-4">
-            <div class="col-lg-4 col-md-6">
-                <div class="card restaurant-card shadow-sm border-0 rounded-4 overflow-hidden h-100 d-flex flex-column animate-pop-in">
-                    <div class="position-relative">
-                        <div class="card-icon-container bg-african-light d-flex align-items-center justify-content-center" style="height: 220px;">
-                            <i class="fas fa-pot-food fa-5x text-african"></i>
-                        </div>
-                        <div class="card-badges position-absolute top-0 start-0 m-3 d-flex flex-column gap-2">
-                            <span class="badge bg-warning text-dark px-3 py-2 rounded-pill shadow-sm d-flex align-items-center">
-                                <i class="fas fa-star me-1 small"></i> 4.9
-                            </span>
-                            <span class="badge bg-danger px-3 py-2 rounded-pill shadow-sm">
-                                <i class="fas fa-fire me-1"></i> Spicy
-                            </span>
-                        </div>
-                        <div class="position-absolute bottom-0 end-0 m-3">
-                            <span class="badge bg-dark bg-opacity-75 text-white px-3 py-2 rounded-pill">
-                                ₦2,500
-                            </span>
-                        </div>
-                    </div>
-                    <div class="card-body flex-grow-1 d-flex flex-column">
-                        <div class="d-flex justify-content-between align-items-start mb-2">
-                            <h5 class="fw-bold mb-0">Efo Riro</h5>
-                            <span class="text-muted">Vegetable Soup</span>
-                        </div>
-                        <div class="mb-3">
-                            <span class="text-muted small d-block mb-1">
-                                <i class="fas fa-utensils me-1"></i> Yoruba Specialty
-                            </span>
-                            <span class="text-muted small d-block">
-                                <i class="fas fa-clock me-1"></i> Served with Swallow
-                            </span>
-                        </div>
-                        <p class="text-muted mb-3 flex-grow-1">Rich vegetable soup prepared with spinach, assorted meats, and traditional spices.</p>
-                        <div class="mt-auto">
-                            <div class="d-flex justify-content-between align-items-center mb-3">
-                                <div class="d-flex align-items-center">
-                                    <i class="fas fa-pepper-hot text-danger me-2"></i>
-                                    <span class="small">Spicy Level: Medium-Hot</span>
-                                </div>
-                                <div class="d-flex align-items-center">
-                                    <i class="fas fa-user-friends text-primary me-2"></i>
-                                    <span class="small">Serves 2-3</span>
-                                </div>
-                            </div>
-                            <a href="#" class="btn btn-african w-100 rounded-pill fw-semibold py-2 d-flex align-items-center justify-content-center">
-                                <i class="fas fa-plus me-2"></i> Add to Order
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="col-lg-4 col-md-6">
-                <div class="card restaurant-card shadow-sm border-0 rounded-4 overflow-hidden h-100 d-flex flex-column animate-pop-in" style="animation-delay: 0.1s;">
-                    <div class="position-relative">
-                        <div class="card-icon-container bg-success bg-opacity-10 d-flex align-items-center justify-content-center" style="height: 220px;">
-                            <i class="fas fa-fish fa-5x text-success"></i>
-                        </div>
-                        <div class="card-badges position-absolute top-0 start-0 m-3 d-flex flex-column gap-2">
-                            <span class="badge bg-warning text-dark px-3 py-2 rounded-pill shadow-sm d-flex align-items-center">
-                                <i class="fas fa-star me-1 small"></i> 4.8
-                            </span>
-                            <span class="badge bg-success px-3 py-2 rounded-pill shadow-sm">
-                                Calabar Special
-                            </span>
-                        </div>
-                        <div class="position-absolute bottom-0 end-0 m-3">
-                            <span class="badge bg-dark bg-opacity-75 text-white px-3 py-2 rounded-pill">
-                                ₦3,200
-                            </span>
-                        </div>
-                    </div>
-                    <div class="card-body flex-grow-1 d-flex flex-column">
-                        <div class="d-flex justify-content-between align-items-start mb-2">
-                            <h5 class="fw-bold mb-0">Edikaikong</h5>
-                            <span class="text-muted">Vegetable & Fish Soup</span>
-                        </div>
-                        <div class="mb-3">
-                            <span class="text-muted small d-block mb-1">
-                                <i class="fas fa-utensils me-1"></i> Calabar Delicacy
-                            </span>
-                            <span class="text-muted small d-block">
-                                <i class="fas fa-clock me-1"></i> Best with Pounded Yam
-                            </span>
-                        </div>
-                        <p class="text-muted mb-3 flex-grow-1">Nutritious soup made with waterleaf, fluted pumpkin, and assorted seafood.</p>
-                        <div class="mt-auto">
-                            <div class="d-flex justify-content-between align-items-center mb-3">
-                                <div class="d-flex align-items-center">
-                                    <i class="fas fa-pepper-hot text-warning me-2"></i>
-                                    <span class="small">Spicy Level: Mild</span>
-                                </div>
-                                <div class="d-flex align-items-center">
-                                    <i class="fas fa-user-friends text-primary me-2"></i>
-                                    <span class="small">Serves 2-4</span>
-                                </div>
-                            </div>
-                            <a href="#" class="btn btn-african w-100 rounded-pill fw-semibold py-2 d-flex align-items-center justify-content-center">
-                                <i class="fas fa-plus me-2"></i> Add to Order
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="col-lg-4 col-md-6">
-                <div class="card restaurant-card shadow-sm border-0 rounded-4 overflow-hidden h-100 d-flex flex-column animate-pop-in" style="animation-delay: 0.2s;">
-                    <div class="position-relative">
-                        <div class="card-icon-container bg-warning bg-opacity-10 d-flex align-items-center justify-content-center" style="height: 220px;">
-                            <i class="fas fa-bowl-food fa-5x text-warning"></i>
-                        </div>
-                        <div class="card-badges position-absolute top-0 start-0 m-3 d-flex flex-column gap-2">
-                            <span class="badge bg-warning text-dark px-3 py-2 rounded-pill shadow-sm d-flex align-items-center">
-                                <i class="fas fa-star me-1 small"></i> 5.0
-                            </span>
-                            <span class="badge bg-info px-3 py-2 rounded-pill shadow-sm">
-                                Party Favorite
-                            </span>
-                        </div>
-                        <div class="position-absolute bottom-0 end-0 m-3">
-                            <span class="badge bg-dark bg-opacity-75 text-white px-3 py-2 rounded-pill">
-                                ₦2,800
-                            </span>
-                        </div>
-                    </div>
-                    <div class="card-body flex-grow-1 d-flex flex-column">
-                        <div class="d-flex justify-content-between align-items-start mb-2">
-                            <h5 class="fw-bold mb-0">Jollof Rice</h5>
-                            <span class="text-muted">With Chicken & Plantain</span>
-                        </div>
-                        <div class="mb-3">
-                            <span class="text-muted small d-block mb-1">
-                                <i class="fas fa-utensils me-1"></i> West African Classic
-                            </span>
-                            <span class="text-muted small d-block">
-                                <i class="fas fa-award me-1"></i> Award-winning Recipe
-                            </span>
-                        </div>
-                        <p class="text-muted mb-3 flex-grow-1">Famous Nigerian jollof rice cooked with tomatoes, peppers, and aromatic spices.</p>
-                        <div class="mt-auto">
-                            <div class="d-flex justify-content-between align-items-center mb-3">
-                                <div class="d-flex align-items-center">
-                                    <i class="fas fa-pepper-hot text-success me-2"></i>
-                                    <span class="small">Spicy Level: Adjustable</span>
-                                </div>
-                                <div class="d-flex align-items-center">
-                                    <i class="fas fa-user-friends text-primary me-2"></i>
-                                    <span class="small">Serves 2</span>
-                                </div>
-                            </div>
-                            <a href="#" class="btn btn-african w-100 rounded-pill fw-semibold py-2 d-flex align-items-center justify-content-center">
-                                <i class="fas fa-plus me-2"></i> Add to Order
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <div class="row mt-5">
-            <div class="col-12 text-center">
-                <a href="{% url 'menu' restaurant.id %}" class="btn btn-african-outline btn-lg rounded-pill px-5 py-3">
-                    <i class="fas fa-book-open me-2"></i> View Full Menu
-                </a>
-            </div>
-        </div>
-    </div>
-</section>
-
-<section class="py-5 bg-white">
-    <div class="container">
-        <div class="row justify-content-center text-center mb-5">
-            <div class="col-lg-8">
-                <h2 class="fw-bold mb-3">Authentic Nigerian Dining Experience</h2>
-                <p class="text-muted">We bring the rich flavors and vibrant culture of Nigeria to your table</p>
-            </div>
-        </div>
-        <div class="row g-4">
-            <div class="col-md-4">
-                <div class="text-center p-4 h-100">
-                    <div class="feature-icon bg-african bg-opacity-10 text-african rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
-                        <i class="fas fa-mortar-pestle fa-2x"></i>
-                    </div>
-                    <h5 class="fw-bold mb-3">Traditional Preparation</h5>
-                    <p class="text-muted">Our dishes are prepared using traditional methods and authentic recipes passed down through generations.</p>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="text-center p-4 h-100">
-                    <div class="feature-icon bg-success bg-opacity-10 text-success rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
-                        <i class="fas fa-seedling fa-2x"></i>
-                    </div>
-                    <h5 class="fw-bold mb-3">Fresh Ingredients</h5>
-                    <p class="text-muted">We source fresh vegetables, spices, and proteins to ensure authentic taste and nutritional value.</p>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="text-center p-4 h-100">
-                    <div class="feature-icon bg-warning bg-opacity-10 text-warning rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
-                        <i class="fas fa-heart fa-2x"></i>
-                    </div>
-                    <h5 class="fw-bold mb-3">Cultural Authenticity</h5>
-                    <p class="text-muted">Experience true Nigerian hospitality and culinary traditions with every meal.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<section class="py-5 bg-light">
+<section class="page-header bg-primary text-white py-4">
     <div class="container">
         <div class="row align-items-center">
-            <div class="col-lg-6 mb-4 mb-lg-0">
-                <h2 class="fw-bold mb-4">About Our Kitchen</h2>
-                <p class="lead mb-4">Taste of Nigeria brings authentic Nigerian and Calabar cuisine to food lovers, preserving traditional recipes while incorporating modern culinary techniques.</p>
-                
-                <div class="d-flex mb-3">
-                    <div class="me-4">
-                        <h4 class="fw-bold text-african">50+</h4>
-                        <p class="text-muted mb-0">Traditional Dishes</p>
-                    </div>
-                    <div class="me-4">
-                        <h4 class="fw-bold text-african">15</h4>
-                        <p class="text-muted mb-0">Years Experience</p>
-                    </div>
-                    <div>
-                        <h4 class="fw-bold text-african">100%</h4>
-                        <p class="text-muted mb-0">Authentic Recipes</p>
-                    </div>
-                </div>
-                
-                <a href="#" class="btn btn-african rounded-pill px-4">
-                    <i class="fas fa-history me-2"></i> Our Story
-                </a>
+            <div class="col-md-8">
+                <h1 class="h2 fw-bold mb-2">Explore Nature's Menu</h1>
+                <p class="mb-0">Discover the best cuisines, crafted just for you</p>
             </div>
-            <div class="col-lg-6">
-                <div class="position-relative">
-                    <div class="chef-icon-container bg-african bg-opacity-10 rounded-4 p-5 text-center">
-                        <i class="fas fa-user-chef fa-6x text-african mb-3"></i>
-                        <div class="mt-4">
-                            <h5 class="fw-bold mb-1">Chef Nneka</h5>
-                            <p class="text-muted mb-0">Head Chef from Calabar</p>
-                            <p class="small text-muted mt-2">15 years of traditional Nigerian cooking experience</p>
-                        </div>
-                    </div>
-                </div>
+            <div class="col-md-4 text-md-end">
+                <i class="fas fa-utensils fa-3x opacity-50"></i>
             </div>
         </div>
+    </div>
+</section>
+
+<section class="py-4">
+    <div class="container">
+        <div class="row">
+            {% for restaurant in restaurants %}
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card shadow-sm h-100">
+                    <div class="position-relative">
+                        <img src="{{ MEDIA_URL }}menu_items/1000066235.jpg" 
+                             class="card-img-top"
+                             alt="{{ restaurant.name }}"
+                             style="height: 200px; object-fit: cover;">
+                        <span class="badge bg-warning text-dark position-absolute top-0 start-0 m-2">
+                            Featured
+                        </span>
+                    </div>
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title fw-bold">{{ restaurant.name }}</h5>
+                        <p class="card-text text-muted flex-grow-1">Delicious cuisines, perfect for your taste buds!</p>
+                        <a href="{% url 'menu' restaurant.id %}" class="btn btn-primary mt-auto">
+                            <i class="fas fa-book-open me-1"></i> View Menu
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        
+        {% if not restaurants %}
+        <div class="text-center py-5">
+            <i class="fas fa-store fa-3x text-muted mb-3"></i>
+            <h4 class="text-muted">No restaurants found</h4>
+            <p class="text-muted">We're working on adding more locations in your area.</p>
+        </div>
+        {% endif %}
     </div>
 </section>
 
 <style>
-    /* African-themed Colors */
-    :root {
-        --african-green: #228B22;
-        --african-yellow: #FFD700;
-        --african-red: #8B0000;
-        --african-orange: #FF8C00;
-    }
-    
-    .bg-african-pattern {
-        background: linear-gradient(135deg, var(--african-green) 0%, #1a6b1a 100%);
-        position: relative;
-    }
-    
-    .bg-african-pattern::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23ffd700' fill-opacity='0.1' fill-rule='evenodd'/%3E%3C/svg%3E");
-        opacity: 0.3;
-    }
-    
-    .overlay-dark {
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: rgba(0, 0, 0, 0.3);
-    }
-    
-    .btn-african {
-        background: linear-gradient(to right, var(--african-green), var(--african-yellow));
+    .card {
+        transition: transform 0.2s;
         border: none;
-        color: #000;
-        font-weight: 600;
-        transition: all 0.3s ease;
     }
-    
-    .btn-african:hover {
+    .card:hover {
         transform: translateY(-2px);
-        box-shadow: 0 5px 15px rgba(34, 139, 34, 0.4);
-        color: #000;
     }
-    
-    .btn-outline-african {
-        border: 2px solid var(--african-green);
-        color: var(--african-green);
-        font-weight: 600;
-        transition: all 0.3s ease;
-    }
-    
-    .btn-outline-african:hover {
-        background-color: var(--african-green);
-        color: white;
-    }
-    
-    .btn-african-outline {
-        border: 2px solid var(--african-green);
-        color: var(--african-green);
-        font-weight: 600;
-        transition: all 0.3s ease;
-    }
-    
-    .btn-african-outline:hover {
-        background-color: var(--african-green);
-        color: white;
-        transform: translateY(-2px);
-        box-shadow: 0 5px 15px rgba(34, 139, 34, 0.4);
-    }
-    
-    .text-african {
-        color: var(--african-green) !important;
-    }
-    
-    .bg-african-light {
-        background-color: rgba(34, 139, 34, 0.1);
-    }
-    
-    .restaurant-card {
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-        border: 1px solid rgba(34, 139, 34, 0.1);
-    }
-    
-    .restaurant-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 10px 25px rgba(34, 139, 34, 0.15);
-    }
-    
-    .card-icon-container {
-        position: relative;
-        overflow: hidden;
-        transition: all 0.3s ease;
-    }
-    
-    .restaurant-card:hover .card-icon-container {
-        background-color: rgba(34, 139, 34, 0.2) !important;
-    }
-    
-    .chef-icon-container {
-        transition: all 0.3s ease;
-    }
-    
-    .chef-icon-container:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 10px 25px rgba(34, 139, 34, 0.15);
-    }
-    
-    .floating-element {
-        position: absolute;
-        animation: float 6s ease-in-out infinite;
-    }
-    
-    .floating-1 {
-        top: 20px;
-        right: 30px;
-        animation-delay: 0s;
-    }
-    
-    .floating-2 {
-        top: 80px;
-        right: 10px;
-        animation-delay: 2s;
-    }
-    
-    .floating-3 {
-        top: 120px;
-        right: 50px;
-        animation-delay: 4s;
-    }
-    
-    .wave-divider {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        overflow: hidden;
-        line-height: 0;
-    }
-    
-    .wave-divider svg {
-        position: relative;
-        display: block;
-        width: calc(100% + 1.3px);
-        height: 50px;
-    }
-    
-    .wave-divider .shape-fill {
-        fill: #f8f9fa;
-    }
-    
-    @keyframes float {
-        0% { transform: translateY(0px); }
-        50% { transform: translateY(-10px); }
-        100% { transform: translateY(0px); }
-    }
-    
-    .animate-fade-in {
-        animation: fadeIn 1s ease-out;
-    }
-    
-    .animate-slide-up {
-        animation: slideUp 1s ease-out;
-    }
-    
-    .animate-pop-in {
-        animation: popIn 0.6s ease-out;
-    }
-    
-    @keyframes fadeIn {
-        from { opacity: 0; }
-        to { opacity: 1; }
-    }
-    
-    @keyframes slideUp {
-        from { 
-            opacity: 0;
-            transform: translateY(20px);
-        }
-        to { 
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-    
-    @keyframes popIn {
-        0% { 
-            opacity: 0;
-            transform: scale(0.8);
-        }
-        100% { 
-            opacity: 1;
-            transform: scale(1);
-        }
-    }
-    
-    .feature-icon {
-        transition: transform 0.3s ease;
-    }
-    
-    .feature-icon:hover {
-        transform: scale(1.1);
-    }
-    
-    /* Font Awesome icon for chef (if not available, use regular user) */
-    .fa-user-chef:before {
-        content: "\f82d"; /* Font Awesome chef hat icon */
+    .btn-primary {
+        background-color: #0d6efd;
+        border-color: #0d6efd;
     }
 </style>
 
