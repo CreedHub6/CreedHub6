@@ -31,7 +31,10 @@
                         <i class="fas fa-utensils fa-4x text-white-50"></i>
                     </div>
                     <div class="floating-element floating-2">
-                        <img src="{% static 'images/african-spice.png' %}" alt="Spices" class="floating-spice">
+                        <i class="fas fa-mortar-pestle fa-3x text-warning opacity-75"></i>
+                    </div>
+                    <div class="floating-element floating-3">
+                        <i class="fas fa-pepper-hot fa-2x text-danger opacity-75"></i>
                     </div>
                 </div>
             </div>
@@ -75,12 +78,8 @@
             <div class="col-lg-4 col-md-6">
                 <div class="card restaurant-card shadow-sm border-0 rounded-4 overflow-hidden h-100 d-flex flex-column animate-pop-in">
                     <div class="position-relative">
-                        <div class="card-image-container">
-                            <img src="{% static 'images/efo-riro.jpg' %}" 
-                                 class="card-img-top"
-                                 alt="Efo Riro"
-                                 style="height: 220px; object-fit: cover;">
-                            <div class="image-overlay"></div>
+                        <div class="card-icon-container bg-african-light d-flex align-items-center justify-content-center" style="height: 220px;">
+                            <i class="fas fa-pot-food fa-5x text-african"></i>
                         </div>
                         <div class="card-badges position-absolute top-0 start-0 m-3 d-flex flex-column gap-2">
                             <span class="badge bg-warning text-dark px-3 py-2 rounded-pill shadow-sm d-flex align-items-center">
@@ -132,12 +131,8 @@
             <div class="col-lg-4 col-md-6">
                 <div class="card restaurant-card shadow-sm border-0 rounded-4 overflow-hidden h-100 d-flex flex-column animate-pop-in" style="animation-delay: 0.1s;">
                     <div class="position-relative">
-                        <div class="card-image-container">
-                            <img src="{% static 'images/edikaikong.jpg' %}" 
-                                 class="card-img-top"
-                                 alt="Edikaikong"
-                                 style="height: 220px; object-fit: cover;">
-                            <div class="image-overlay"></div>
+                        <div class="card-icon-container bg-success bg-opacity-10 d-flex align-items-center justify-content-center" style="height: 220px;">
+                            <i class="fas fa-fish fa-5x text-success"></i>
                         </div>
                         <div class="card-badges position-absolute top-0 start-0 m-3 d-flex flex-column gap-2">
                             <span class="badge bg-warning text-dark px-3 py-2 rounded-pill shadow-sm d-flex align-items-center">
@@ -189,12 +184,8 @@
             <div class="col-lg-4 col-md-6">
                 <div class="card restaurant-card shadow-sm border-0 rounded-4 overflow-hidden h-100 d-flex flex-column animate-pop-in" style="animation-delay: 0.2s;">
                     <div class="position-relative">
-                        <div class="card-image-container">
-                            <img src="{% static 'images/jollof-rice.jpg' %}" 
-                                 class="card-img-top"
-                                 alt="Jollof Rice"
-                                 style="height: 220px; object-fit: cover;">
-                            <div class="image-overlay"></div>
+                        <div class="card-icon-container bg-warning bg-opacity-10 d-flex align-items-center justify-content-center" style="height: 220px;">
+                            <i class="fas fa-bowl-food fa-5x text-warning"></i>
                         </div>
                         <div class="card-badges position-absolute top-0 start-0 m-3 d-flex flex-column gap-2">
                             <span class="badge bg-warning text-dark px-3 py-2 rounded-pill shadow-sm d-flex align-items-center">
@@ -322,11 +313,12 @@
             </div>
             <div class="col-lg-6">
                 <div class="position-relative">
-                    <img src="{% static 'images/chef-cooking.jpg' %}" alt="Our Chef" class="img-fluid rounded-4 shadow">
-                    <div class="position-absolute bottom-0 start-0 m-4">
-                        <div class="bg-white bg-opacity-90 rounded-3 p-3 shadow-sm">
+                    <div class="chef-icon-container bg-african bg-opacity-10 rounded-4 p-5 text-center">
+                        <i class="fas fa-user-chef fa-6x text-african mb-3"></i>
+                        <div class="mt-4">
                             <h5 class="fw-bold mb-1">Chef Nneka</h5>
-                            <p class="text-muted small mb-0">Head Chef from Calabar</p>
+                            <p class="text-muted mb-0">Head Chef from Calabar</p>
+                            <p class="small text-muted mt-2">15 years of traditional Nigerian cooking experience</p>
                         </div>
                     </div>
                 </div>
@@ -413,6 +405,10 @@
         color: var(--african-green) !important;
     }
     
+    .bg-african-light {
+        background-color: rgba(34, 139, 34, 0.1);
+    }
+    
     .restaurant-card {
         transition: transform 0.3s ease, box-shadow 0.3s ease;
         border: 1px solid rgba(34, 139, 34, 0.1);
@@ -423,18 +419,23 @@
         box-shadow: 0 10px 25px rgba(34, 139, 34, 0.15);
     }
     
-    .card-image-container {
+    .card-icon-container {
         position: relative;
         overflow: hidden;
+        transition: all 0.3s ease;
     }
     
-    .image-overlay {
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.1) 100%);
+    .restaurant-card:hover .card-icon-container {
+        background-color: rgba(34, 139, 34, 0.2) !important;
+    }
+    
+    .chef-icon-container {
+        transition: all 0.3s ease;
+    }
+    
+    .chef-icon-container:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(34, 139, 34, 0.15);
     }
     
     .floating-element {
@@ -454,10 +455,10 @@
         animation-delay: 2s;
     }
     
-    .floating-spice {
-        width: 50px;
-        height: auto;
-        filter: brightness(0) invert(1) opacity(0.7);
+    .floating-3 {
+        top: 120px;
+        right: 50px;
+        animation-delay: 4s;
     }
     
     .wave-divider {
@@ -531,6 +532,11 @@
     
     .feature-icon:hover {
         transform: scale(1.1);
+    }
+    
+    /* Font Awesome icon for chef (if not available, use regular user) */
+    .fa-user-chef:before {
+        content: "\f82d"; /* Font Awesome chef hat icon */
     }
 </style>
 
